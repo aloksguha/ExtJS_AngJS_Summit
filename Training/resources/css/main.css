@@ -40,9 +40,9 @@ body{
 }
 
 .topic{
-    border:1px solid red;
+    border:1px solid #1e0d9e;
     border-radius:5px;
-    background: yellow;
+    background: #78b5fd;
     padding:10px;
 }
 
