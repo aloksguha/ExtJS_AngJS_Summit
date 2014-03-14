@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Synerzip's HTML5 Summit</title>
+    <link rel="stylesheet" href="/resources/css/main.css"/>
+</head>
+<body>
+<section class='container'>
+<header class='header'>
+    <img class='logo' src='/resources/images/synerzip-logo-hi-res.gif'></img>
+</header>
+<a href="/index.html">Return to Main Page</a>
+<hr/>
+<section class="content">
+<article>
+    <img src="http://learn.knockoutjs.com/Content/App/icon.png" width="60px" height="60px"></img>
+
+    <h1><span>Knockout Js</span></h1>
+    <hr/>
+</article>
+<article>
+    <h1><a name="TOC">Table of Contents</a></h1>
+    <ul>
+        <li><a href="#basics">KnockOut Basics</a></li>
+        <li><a href="#gettingstarted">Chapter - 1 Getting Started with Knockout Js </a></li>
+        <li><a href="#observables">Chapter 2 - Knockout Js Observable - 2 Way Binding</a></li>
+        <li><a href="#iterating">Chapter 3 - Iterating over data - Showing Courses</a></li>
+        <li><a href="#computed-observables">Chapter 4 - Computed Observables - Search Courses</a></li>
+        <li><a href="#handling-events">Chapter 5 - Handling Events - Add New Course</a></li>
+        <li><a href="#advanced-handling-events">Chapter 6 - Advanced Handling Events - Delete a Course</a></li>
+        <li><a href="#advanced-knockout">Chapter 7 - Advanced KnockOut - Inline Editing</a></li>
+
+    </ul>
+    <hr/>
+</article>
+<article>
+
+    <h3 class="topic"><a name="basics">Basics</a></h3>
+
+    <p>
+        Knockout JS Library provides two things
+    <ul>
+        <li>Model - View - ViewModel (MV-VM) Framework</li>
+        <li>Declarative UI binding Framework</li>
+    </ul>
+    </p>
+
+</article>
+<article>
+    <h4>MV VM Basics</h4>
+    <img src="MV-VM.png" width="600px" height="300px"/>
+
+    <h4>Declarative UI Binding</h4>
+
+    <p>
+        See the data-bind="text: firstName" below. This is what we refer to as Declarative UI Binding.
+        There are two parts to this
+    <ul>
+        <li><b>HTML World</b> - data-bind="text: firstName" means put in the value of firstName data attribute
+            inside the given html tag e.g Div or Span
+        </li>
+        <li><b>JavaScript World</b> - The JavaScript world bounds the data attribute to the HTML World, so that
+            the HTML world's data-bind attribute can consume them
+        </li>
+    </ul>
+
+
+    </p>
+    <b><u>HTML World</u></b>
+        <pre class="code">
+&lt;p&gt;First name: &lt;strong data-bind="text: firstName"&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Last name: &lt;strong data-bind="text: lastName"&gt;&lt;/strong&gt;&lt;/p&gt;
+        </pre>
+
+    <b><u>JavaScript World</u></b>
+        <pre class="code">
+function AppViewModel() {
+    this.firstName = "Bert";
+    this.lastName = "Bertington";
+}
+
+// Activates knockout.js
+ko.applyBindings(new AppViewModel());
+        </pre>
+    <hr/>
+</article>
+<article>
+    <h3 class="topic"><a name="gettingstarted">Chapter - 1 Getting Started with Knockout Js</a> - <a
+            href="chapter-1/index.html" target="_blank">Launch</a>
+    </h3>
+    <iframe src="chapter-1/index.html" width="100%" height="320px"></iframe>
+
+    <b><u>HTML Source</u></b>
+        <pre class="code">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Synerzip's HTML5 Summit&lt;/title&gt;
+    &lt;link rel="stylesheet" href="/resources/css/main.css"/&gt;
+    &lt;script type="text/javascript" src="knockout-2.2.1.js"&gt;&lt;/script&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+&lt;section class='container'&gt;
+    &lt;header class='header'&gt;
+        &lt;img class='logo' src='/resources/images/synerzip-logo-hi-res.gif'&gt;&lt;/img&gt;
+    &lt;/header&gt;
+    &lt;hr/&gt;
+    &lt;section class="content"&gt;
+        &lt;h1&gt;Knockout Basic Example&lt;/h1&gt;
+        &lt;hr/&gt;
+        &lt;p&gt;First name: &lt;strong data-bind="text: firstName"&gt;&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;Last name: &lt;strong data-bind="text: lastName"&gt;&lt;/strong&gt;&lt;/p&gt;
+    &lt;/section&gt;
+&lt;/section&gt;
+
+&lt;script type="text/javascript" src="app.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </pre>
+
+    <b><u>JavaScript Source</u></b>
+        <pre class="code">
+function AppViewModel() {
+    this.firstName = "Rohit";
+    this.lastName = "Ghatol";
+}
+
+// Activates knockout.js
+ko.applyBindings(new AppViewModel());
+        </pre>
+    <p>
+        <b>Important Note!</b>
+    </p>
+
+    <p>
+        The complete syntax for ko.applyBindings is as follow
+                <pre class="code">
+ko.applyBindings(&lt;&lt;data&gt;&gt;,&lt;&lt;dom-element&gt;&gt;);
+                </pre>
+    It is possible to use ko.applyBindings in following manner
+    <ul>
+        <li>
+                        <pre class="code">
+ko.applyBindings(courses);
+                        </pre>
+        </li>
+        <li>
+                        <pre class="code">
+ko.applyBindings(courses,document.getElementById('placeholder'));
+                        </pre>
+            In this case, the effect of the bindings is localized to element with id 'placeholder'
+            and you can call ko.applyBindings() multiple times for different areas in the HTML page
+        </li>
+
+    </ul>
+    </p>
+    <a href="#TOC">Table of Contents</a>
+    <hr/>
+</article>
+<article>
+    <h3 class="topic"><a name="#observables">Chapter - 2 Knockout Js Observable - 2 Way Binding</a> - <a
+            href="chapter-2/index.html" target="_blank">Launch</a></h3>
+
+    <p>
+        In this example we will show you the real strength of Knockout. We will make two changes
+    <ul>
+        <li>In the JavaScript side we will use "this.firstName = ko.observable('Rohit');" instead of "this.firstName =
+            'Rohit';"
+        </li>
+        <li>In the HTML world apart from binding firstName to a &lt;strong&gt; tag, we will also bind it to &lt;input
+            type="text"&gt; tag.
+            <ul>
+                <li>&lt;input type="text" data-bind="value: firstName"&gt; &lt;/input&gt;</li>
+            </ul>
+        </li>
+    </ul>
+    </p>
+    <iframe src="chapter-2/index.html" width="100%" height="500px"></iframe>
+
+    <b><u>HTML Source</u></b>
+        <pre class="code">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Synerzip's HTML5 Summit&lt;/title&gt;
+    &lt;link rel="stylesheet" href="/resources/css/main.css"/&gt;
+    &lt;script type="text/javascript" src="knockout-2.2.1.js"&gt;&lt;/script&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+&lt;section class='container'&gt;
+    &lt;header class='header'&gt;
+        &lt;img class='logo' src='/resources/images/synerzip-logo-hi-res.gif'&gt;&lt;/img&gt;
+    &lt;/header&gt;
+    &lt;hr/&gt;
+    &lt;section class="content"&gt;
+        &lt;h1&gt;Knockout Observable - Two Way Binding Example&lt;/h1&gt;
+        &lt;hr/&gt;
+        &lt;h3&gt;View Data&lt;/h3&gt;
+        &lt;p&gt;First name: &lt;strong data-bind="text: firstName"&gt;&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;Last name: &lt;strong data-bind="text: lastName"&gt;&lt;/strong&gt;&lt;/p&gt;
+        &lt;hr/&gt;
+        &lt;h3&gt;Edit Data&lt;/h3&gt;
+        &lt;p&gt;First name: &lt;input type="text" data-bind="value: firstName"&gt; &lt;/input&gt;&lt;/p&gt;
+        &lt;p&gt;Last name: &lt;input type="text"  data-bind="value: lastName"&gt; &lt;/input&gt;&lt;/p&gt;
+    &lt;/section&gt;
+&lt;/section&gt;
+
+&lt;script type="text/javascript" src="app.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </pre>
+
+    <b><u>JavaScript Source</u></b>
+        <pre class="code">
+function AppViewModel() {
+    this.firstName = ko.observable("Rohit");
+    this.lastName = ko.observable("Ghatol");
+}
+
+// Activates knockout.js
+ko.applyBindings(new AppViewModel());
+        </pre>
+    <a href="#TOC">Table of Contents</a>
+    <hr/>
+
+</article>
+<article>
+    <h3 class="topic"><a name="iterating">Chapter - 3 Iterating over data - Listing Courses </a>- <a href="chapter-3/index.html" target="_blank">Launch</a>
+    </h3>
+    <iframe src="chapter-3/index.html" width="100%" height="500px"></iframe>
+    <p>
+        To Iterate over a date we use the data-bind="foreach: &lt;&lt;data&gt;&gt;" as shown below
+                <pre class="code">
+&lt;ul data-bind="foreach:  &lt;&lt;courses&gt;&gt;" &gt;
+    &lt;-- Note $data points to current course and $parent points to courses and $root points to &lt;&lt;root&gt;&gt; we used in ko.apply(&lt;&lt;root&gt;&gt;) --&gt;
+    &lt;li&gt;
+        &lt;div data-bind="text:&lt;&lt;attribute&gt;&gt;"&gt;&lt;/div&gt;
+    &lt;li&gt;
+&lt;ul&gt;
+                </pre>
+    </p>
+    <b><u>HTML Source</u></b>
+            <pre class="code">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Synerzip's HTML5 Summit&lt;/title&gt;
+    &lt;link rel="stylesheet" href="/resources/css/main.css"/&gt;
+    &lt;script type="text/javascript" src="knockout-2.2.1.js"&gt;&lt;/script&gt;
+    &lt;style&gt;
+        .....
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;section class='container'&gt;
+    &lt;header class='header'&gt;
+        &lt;img class='logo' src='/resources/images/synerzip-logo-hi-res.gif'&gt;&lt;/img&gt;
+    &lt;/header&gt;
+    &lt;hr/&gt;
+    &lt;section class="content"&gt;
+        &lt;h1&gt;KnockoutJs - Iterating Over Data&lt;/h1&gt;
+        &lt;hr/&gt;
+        &lt;h3&gt;Courses&lt;/h3&gt;
+        &lt;table&gt;
+            &lt;thead&gt;
+                &lt;tr class="course-header"&gt;
+                    &lt;td&gt;Icon&lt;/td&gt;
+                    &lt;td&gt;Name&lt;/td&gt;
+                    &lt;td&gt;Description&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody data-bind="foreach: courses" &gt;
+            &lt;tr class="course"&gt;
+                &lt;td&gt;&lt;div class="clogo" data-bind="text:courseIcon"&gt;&lt;/div&gt;&lt;/td&gt;
+                &lt;td&gt;&lt;div class="name" data-bind="text:courseName"&gt;&lt;/div&gt;&lt;/td&gt;
+                &lt;td&gt;&lt;div class="description" data-bind="text:courseDescription"&gt;&lt;/div&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+
+    &lt;/section&gt;
+&lt;/section&gt;
+
+&lt;script type="text/javascript" src="app.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </pre>
+    <b><u>JavaScript Source</u></b>
+            <pre class="code">
+
+function AppViewModel() {
+    var staticData = [
+        {
+            courseIcon:"A",
+            courseName:"Android Basics",
+            courseDescription:"Teaches Hello World Application in Android"
+        },
+        {
+            courseIcon:"i",
+            courseName:"iOS Basics",
+            courseDescription:"Teaches Hello World Application in iOS"
+        },
+        {
+            courseIcon:"H",
+            courseName:"HTML5 Basics",
+            courseDescription:"Teaches HTML5 Fundamentals"
+        },
+        {
+            courseIcon:"C",
+            courseName:"CSS 3 Basics",
+            courseDescription:"Teaches CSS3 Fundamentals"
+        },
+        {
+            courseIcon:"M",
+            courseName:"MongoDB Basics",
+            courseDescription:"MongoDB Primer"
+        }
+    ]
+    this.courses = ko.observableArray(staticData);
+
+}
+
+// Activates knockout.js
+ko.applyBindings(new AppViewModel());
+            </pre>
+    <a href="#TOC">Table of Contents</a>
+    <hr/>
+</article>
+<article>
+    <h3 class="topic"><a name="computed-observables">Chapter - 4 Computed Observables</a> - Filter Courses - <a href="chapter-4/index.html"
+                                                                             target="_blank">Launch</a></h3>
+    <iframe src="chapter-4/index.html" width="100%" height="550px"></iframe>
+    <p>
+        <b>Computed Observable</b> - Often it is required that we compute new data from existing data.
+        See the above scenario, we have two data points
+    <ul>
+        <li>"courses" observable array list - Which Holds all courses</li>
+        <li>"query" observable string - Which is bound to the search text box</li>
+    </ul>
+    Using these two we should now want to compute a new Observable named "filteredCourse". This new computed
+    value needs to be observable so that the data-bind with "foreach" comes into effect when any value changes.
+
+                <pre class="code">
+var self = this;
+self.courses = ko.observableArray(staticData);
+self.query = ko.observable();
+
+self.filteredCourses = ko.computed(function(){
+    var filtered = [];
+    var orig = self.courses();
+    var query = self.query();
+    if(query!=null && query.trim().length>0 ){
+        for(var index=0;index<orig.length;index++){
+            var course = orig[index];
+            if(course.courseName.indexOf(query)>=0 || course.courseDescription.indexOf(query)>=0){
+                filtered.push(course);
+            }
+        }
+    }
+    else{
+        filtered = orig;
+    }
+    return filtered;
+})
+                </pre>
+
+    Once we have done this, we change our HTML from
+            <pre class="code">
+&lt;tbody data-bind="foreach: courses" &gt;
+            </pre>
+    to
+            <pre class="code">
+&lt;tbody data-bind="foreach: filteredCourses" &gt;
+            </pre>
+
+    </p>
+    <b><u>HTML Source</u></b>
+            <pre class="code">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Synerzip's HTML5 Summit&lt;/title&gt;
+    &lt;link rel="stylesheet" href="/resources/css/main.css"/&gt;
+    &lt;script type="text/javascript" src="knockout-2.2.1.js"&gt;&lt;/script&gt;
+    &lt;style&gt;
+       .......
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;section class='container'&gt;
+    &lt;header class='header'&gt;
+        &lt;img class='logo' src='/resources/images/synerzip-logo-hi-res.gif'&gt;&lt;/img&gt;
+    &lt;/header&gt;
+    &lt;hr/&gt;
+    &lt;section class="content"&gt;
+        &lt;h1&gt;KnockoutJs - Computed Observables&lt;/h1&gt;
+        &lt;hr/&gt;
+        &lt;h3&gt;Courses&lt;/h3&gt;
+        &lt;div&gt;
+            Search:&lt;input type="text" data-bind="value:query, valueUpdate: 'afterkeydown'"&gt;
+                &lt;button data-bind="click: function(){query(null)}"&gt;X&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;table&gt;
+            &lt;thead&gt;
+                &lt;tr class="course-header"&gt;
+                    &lt;td&gt;Icon&lt;/td&gt;
+                    &lt;td&gt;Name&lt;/td&gt;
+                    &lt;td&gt;Description&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody data-bind="foreach: filteredCourses" &gt;
+            &lt;tr class="course"&gt;
+                &lt;td&gt;&lt;div class="clogo" data-bind="text:courseIcon"&gt;&lt;/div&gt;&lt;/td&gt;
+                &lt;td&gt;&lt;div class="name" data-bind="text:courseName"&gt;&lt;/div&gt;&lt;/td&gt;
+                &lt;td&gt;&lt;div class="description" data-bind="text:courseDescription"&gt;&lt;/div&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+
+    &lt;/section&gt;
+&lt;/section&gt;
+
+&lt;script type="text/javascript" src="app.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </pre>
+    <b><u>JavaScript Source</u></b>
+            <pre class="code">
+function AppViewModel() {
+    var staticData = [
+        {
+            courseIcon:"A",
+            courseName:"Android Basics",
+            courseDescription:"Teaches Hello World Application in Android"
+        },
+        {
+            courseIcon:"i",
+            courseName:"iOS Basics",
+            courseDescription:"Teaches Hello World Application in iOS"
+        },
+        {
+            courseIcon:"H",
+            courseName:"HTML5 Basics",
+            courseDescription:"Teaches HTML5 Fundamentals"
+        },
+        {
+            courseIcon:"C",
+            courseName:"CSS 3 Basics",
+            courseDescription:"Teaches CSS3 Fundamentals"
+        },
+        {
+            courseIcon:"M",
+            courseName:"MongoDB Basics",
+            courseDescription:"MongoDB Primer"
+        }
+    ]
+    var self = this;
+    self.courses = ko.observableArray(staticData);
+    self.query = ko.observable();
+
+    self.filteredCourses = ko.computed(function(){
+        var filtered = [];
+        var orig = self.courses();
+        var query = self.query();
+        if(query!=null && query.trim().length>0 ){
+            for(var index=0;index<orig.length;index++){
+                var course = orig[index];
+                if(course.courseName.indexOf(query)>=0 || course.courseDescription.indexOf(query)>=0){
+                    filtered.push(course);
+                }
+            }
+        }
+        else{
+            filtered = orig;
+        }
+        return filtered;
+    })
+
+}
+
+// Activates knockout.js
+ko.applyBindings(new AppViewModel());
+            </pre>
+    <a href="#TOC">Table of Contents</a>
+    <hr/>
+</article>
+<article>
+<h3 class="topic"><a name="handling-events">Chapter - 5 Handling Events</a> - Adding a Course- <a href="chapter-5/index.html"
+                                                                    target="_blank">Launch</a></h3>
+<iframe src="chapter-5/index.html" width="100%" height="550px"></iframe>
+<p>
+    <b>Handling Events</b> - Events can be bound to HTML elements like button very easily in Knockout. See the below
+    example for the same
+                <pre class="code">
+&lt;button data-bind="click: addNewCourse" &gt;&lt;/button&gt;
+                </pre>
+Provided the Javascript code looks as follows
+                <pre class="code">
+function AppViewModel() {
+    var self = this;
+    self.addNewCourse = function(){
+        //Called when Add New Course button is clicked
+    }
+    return self;
+}
+ko.applyBindings(new AppViewModel());
+                </pre>
+</p>
+<p>
+    <b>Important Note</b> - Nesting of data can be done very easily in Knockout if we are dealing with more than one
+    class.
+    In the following example we have two classes "UserViewModel" and "CourseViewModel", we can find both of them making
+    them
+    attributes of an object. A corresponding change needs to be made in HTML code where we now use course.addNewCourse
+    instead of addNewCourse
+                <pre class="code">
+&lt;button data-bind="click: course.addNewCourse" &gt;&lt;/button&gt;
+                </pre>
+Provided the Javascript code looks as follows
+                <pre class="code">
+function UserViewModel(){
+    var self = this;
+    //.....
+    return self;
+}
+
+function CourseViewModel() {
+    var self = this;
+    self.addNewCourse = function(){
+        //Called when Add New Course button is clicked
+    }
+    return self;
+}
+ko.applyBindings(
+                    {
+                        course:new CourseViewModel()
+                    },
+                    {
+                        user:new UserViewModel()
+                    }
+                );
+                </pre>
+</p>
+<b><u>HTML Source</u></b>
+            <pre class="code">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Synerzip's HTML5 Summit&lt;/title&gt;
+    &lt;link rel="stylesheet" href="/resources/css/main.css"/&gt;
+    &lt;script type="text/javascript" src="knockout-2.2.1.js"&gt;&lt;/script&gt;
+    &lt;style&gt;
+        ......
+
+        .errorMessage{
+            color:red;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;section class='container'&gt;
+    &lt;header class='header'&gt;
+        &lt;img class='logo' src='/resources/images/synerzip-logo-hi-res.gif'&gt;&lt;/img&gt;
+    &lt;/header&gt;
+    &lt;hr/&gt;
+    &lt;section class="content"&gt;
+        &lt;h1&gt;KnockoutJs - Handling Events&lt;/h1&gt;
+        &lt;hr/&gt;
+        &lt;h3&gt;Courses&lt;/h3&gt;
+        &lt;div&gt;
+            Search:&lt;input type="text" data-bind="value:query, valueUpdate: 'afterkeydown'"&gt;&lt;button data-bind="click: function(){query(null)}"&gt;X&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div data-bind="visible: lastKnownError()!=null" class="errorMessage"&gt;
+            &lt;table&gt;
+                &lt;tr&gt;
+
+                    &lt;td&gt;&lt;div data-bind="text:lastKnownError"&gt;&lt;/div&gt;&lt;/td&gt;
+                    &lt;td&gt;&lt;button data-bind="click:clearError"&gt;X&lt;/button&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+        &lt;table&gt;
+            &lt;thead&gt;
+                &lt;tr class="course-header"&gt;
+                    &lt;td&gt;Icon&lt;/td&gt;
+                    &lt;td&gt;Name&lt;/td&gt;
+                    &lt;td&gt;Description&lt;/td&gt;
+                    &lt;td&gt;Actions&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr class="course-header"&gt;
+                    &lt;form data-bind="submit:addNewCourse"&gt;
+                    &lt;td&gt;&lt;input type="text" data-bind="value:newCourseIcon, valueUpdate: 'afterkeydown'"&gt; &lt;/input&gt; &lt;/td&gt;
+                    &lt;td&gt;&lt;input type="text" data-bind="value:newCourseName, valueUpdate: 'afterkeydown'"&gt; &lt;/input&gt;&lt;/td&gt;
+                    &lt;td&gt;&lt;input type="text" data-bind="value:newCourseDescription, valueUpdate: 'afterkeydown'"&gt; &lt;/input&gt;&lt;/td&gt;
+                    &lt;td&gt;&lt;button data-bind="click:addNewCourse"&gt;Add New Course&lt;/button&gt;&lt;/td&gt;
+                    &lt;/form&gt;
+                &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody data-bind="foreach: filteredCourses" &gt;
+            &lt;tr class="course"&gt;
+                &lt;td&gt;
+                    &lt;div class="clogo" data-bind="text:courseIcon"&gt;&lt;/div&gt;
+                &lt;/td&gt;
+                &lt;td&gt;
+                    &lt;div class="name" data-bind="text:courseName"&gt;&lt;/div&gt;
+                &lt;/td&gt;
+                &lt;td&gt;
+                    &lt;div class="description" data-bind="text:courseDescription"&gt;&lt;/div&gt;
+                &lt;/td&gt;
+                &lt;td&gt;
+
+                &lt;/td&gt;
+
+            &lt;/tr&gt;
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+
+    &lt;/section&gt;
+&lt;/section&gt;
+
+&lt;script type="text/javascript" src="app.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </pre>
+<b><u>JavaScript Source</u></b>
+            <pre class="code">
+
+function AppViewModel() {
+    var staticData = [
+        {
+            courseIcon:"A",
+            courseName:"Android Basics",
+            courseDescription:"Teaches Hello World Application in Android"
+        },
+        {
+            courseIcon:"i",
+            courseName:"iOS Basics",
+            courseDescription:"Teaches Hello World Application in iOS"
+
+        },
+        {
+            courseIcon:"H",
+            courseName:"HTML5 Basics",
+            courseDescription:"Teaches HTML5 Fundamentals"
+        },
+        {
+            courseIcon:"C",
+            courseName:"CSS 3 Basics",
+            courseDescription:"Teaches CSS3 Fundamentals"
+        },
+        {
+            courseIcon:"M",
+            courseName:"MongoDB Basics",
+            courseDescription:"MongoDB Primer"
+        }
+    ]
+    var self = this;
+    //Observable Array which holds all courses
+    self.courses = ko.observableArray(staticData);
+
+    self.query = ko.observable();
+
+    self.filteredCourses = ko.computed(function(){
+        var filtered = [];
+        var orig = self.courses();
+        var query = self.query();
+        if(query!=null && query.trim().length>0 ){
+            for(var index=0;index<orig.length;index++){
+                var course = orig[index];
+                if(course.courseName.indexOf(query)>=0 || course.courseDescription.indexOf(query)>=0){
+                    filtered.push(course);
+                }
+            }
+        }
+        else{
+            filtered = orig;
+        }
+        return filtered;
+    })
+
+    //Observables to hold value of new Course form fields
+    self.newCourseIcon = ko.observable();
+    self.newCourseName = ko.observable();
+    self.newCourseDescription = ko.observable();
+
+
+    //Object to hold the last known error
+    self.lastKnownError = ko.observable(null);
+
+    //Callback to add a new course
+    self.addNewCourse = function(){
+        self.lastKnownError(null);
+        if(self.newCourseIcon()!=null
+            && self.newCourseName()!=null
+            && self.newCourseDescription()!=null
+            ){
+            this.courses.push(
+                {
+                    courseIcon:self.newCourseIcon(),
+                    courseName:self.newCourseName(),
+                    courseDescription:self.newCourseDescription()
+                }
+            );
+        }
+        else{
+            self.lastKnownError('None of Course Icon, Name or Description can be empty');
+        }
+        self.newCourseIcon(null);
+        self.newCourseName(null);
+        self.newCourseDescription(null);
+    }
+
+
+    self.clearError = function(){
+        self.lastKnownError(null);
+    }
+
+}
+
+// Activates knockout.js
+ko.applyBindings(new AppViewModel());
+            </pre>
+<a href="#TOC">Table of Contents</a>
+<hr/>
+</article>
+<article>
+<h3 class="topic"><a name="advanced-handling-events">Chapter - 6 Advanced Events</a> - Delete a Course - <a href="chapter-6/index.html"
+                                                                     target="_blank">Launch</a></h3>
+<iframe src="chapter-6/index.html" width="100%" height="550px"></iframe>
+<p>
+    In previous example we saw how to bind "Add New Course" button to "addNewCourse" function in the ViewModel.
+    In this example we will see how to find Delete "X" button for each course item.
+                <pre class="code">
+&lt;table&gt;
+    &lt;thead&gt;
+        &lt;tr class="course-header"&gt;
+            ....
+        &lt;/tr&gt;
+        &lt;tr class="course-header"&gt;
+            &lt;form data-bind="submit:addNewCourse"&gt;
+            &lt;td&gt;&lt;input type="text" data-bind="value:newCourseIcon, valueUpdate: 'afterkeydown'"&gt; &lt;/input&gt; &lt;/td&gt;
+            &lt;td&gt;&lt;input type="text" data-bind="value:newCourseName, valueUpdate: 'afterkeydown'"&gt; &lt;/input&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;input type="text" data-bind="value:newCourseDescription, valueUpdate: 'afterkeydown'"&gt; &lt;/input&gt;&lt;/td&gt;
+
+            ** Pay Attention Here
+            &lt;td&gt;&lt;button data-bind="click:addNewCourse"&gt;Add New Course&lt;/button&gt;&lt;/td&gt;
+
+            &lt;/form&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody data-bind="foreach: filteredCourses" &gt;
+    &lt;tr class="course"&gt;
+        &lt;td&gt;
+            &lt;div class="clogo" data-bind="text:courseIcon"&gt;&lt;/div&gt;
+        &lt;/td&gt;
+        .......
+        &lt;td&gt;
+            ** And Pay Attention Here
+            ** - The Context Object here is $data (current course while we are iterating over filteredCourses)
+            ** - $data (aka course) is an object and does not the function deleteCourse
+            ** - But $parent (aka instance of AppViewModel) has that function
+            &lt;button data-bind="click:$parent.deleteCourse"&gt;X&lt;/button&gt;
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;
+                </pre>
+</p>
+<b><u>HTML Source</u></b>
+            <pre class="code">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Synerzip's HTML5 Summit&lt;/title&gt;
+    &lt;link rel="stylesheet" href="/resources/css/main.css"/&gt;
+    &lt;script type="text/javascript" src="knockout-2.2.1.js"&gt;&lt;/script&gt;
+    &lt;style&gt;
+        .....
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;section class='container'&gt;
+    &lt;header class='header'&gt;
+        &lt;img class='logo' src='/resources/images/synerzip-logo-hi-res.gif'&gt;&lt;/img&gt;
+    &lt;/header&gt;
+    &lt;hr/&gt;
+    &lt;section class="content"&gt;
+        &lt;h1&gt;KnockoutJs - Handling Events&lt;/h1&gt;
+        &lt;hr/&gt;
+        &lt;h3&gt;Courses&lt;/h3&gt;
+        &lt;div&gt;
+            Search:&lt;input type="text" data-bind="value:query, valueUpdate: 'afterkeydown'"&gt;&lt;button data-bind="click: function(){query(null)}"&gt;X&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div data-bind="visible: lastKnownError()!=null" class="errorMessage"&gt;
+            &lt;table&gt;
+                &lt;tr&gt;
+
+                    &lt;td&gt;&lt;div data-bind="text:lastKnownError"&gt;&lt;/div&gt;&lt;/td&gt;
+                    &lt;td&gt;&lt;button data-bind="click:clearError"&gt;X&lt;/button&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+        &lt;table&gt;
+            &lt;thead&gt;
+                &lt;tr class="course-header"&gt;
+                    &lt;td&gt;Icon&lt;/td&gt;
+                    &lt;td&gt;Name&lt;/td&gt;
+                    &lt;td&gt;Description&lt;/td&gt;
+                    &lt;td&gt;Actions&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr class="course-header"&gt;
+                    &lt;form data-bind="submit:addNewCourse"&gt;
+                    &lt;td&gt;&lt;input type="text" data-bind="value:newCourseIcon, valueUpdate: 'afterkeydown'"&gt; &lt;/input&gt; &lt;/td&gt;
+                    &lt;td&gt;&lt;input type="text" data-bind="value:newCourseName, valueUpdate: 'afterkeydown'"&gt; &lt;/input&gt;&lt;/td&gt;
+                    &lt;td&gt;&lt;input type="text" data-bind="value:newCourseDescription, valueUpdate: 'afterkeydown'"&gt; &lt;/input&gt;&lt;/td&gt;
+                    &lt;td&gt;&lt;button data-bind="click:addNewCourse"&gt;Add New Course&lt;/button&gt;&lt;/td&gt;
+                    &lt;/form&gt;
+                &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody data-bind="foreach: filteredCourses" &gt;
+            &lt;tr class="course"&gt;
+                &lt;td&gt;
+                    &lt;div class="clogo" data-bind="text:courseIcon"&gt;&lt;/div&gt;
+                &lt;/td&gt;
+                &lt;td&gt;
+                    &lt;div class="name" data-bind="text:courseName"&gt;&lt;/div&gt;
+                &lt;/td&gt;
+                &lt;td&gt;
+                    &lt;div class="description" data-bind="text:courseDescription"&gt;&lt;/div&gt;
+                &lt;/td&gt;
+                &lt;td&gt;
+                    &lt;button data-bind="click:$parent.deleteCourse"&gt;X&lt;/button&gt;
+                &lt;/td&gt;
+
+            &lt;/tr&gt;
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+
+    &lt;/section&gt;
+&lt;/section&gt;
+
+&lt;script type="text/javascript" src="app.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </pre>
+<b><u>JavaScript Source</u></b>
+            <pre class="code">
+
+function AppViewModel() {
+    var staticData = [
+        {
+            courseIcon:"A",
+            courseName:"Android Basics",
+            courseDescription:"Teaches Hello World Application in Android"
+        },
+        {
+            courseIcon:"i",
+            courseName:"iOS Basics",
+            courseDescription:"Teaches Hello World Application in iOS"
+
+        },
+        {
+            courseIcon:"H",
+            courseName:"HTML5 Basics",
+            courseDescription:"Teaches HTML5 Fundamentals"
+        },
+        {
+            courseIcon:"C",
+            courseName:"CSS 3 Basics",
+            courseDescription:"Teaches CSS3 Fundamentals"
+        },
+        {
+            courseIcon:"M",
+            courseName:"MongoDB Basics",
+            courseDescription:"MongoDB Primer"
+        }
+    ]
+    var self = this;
+    //Observable Array which holds all courses
+    self.courses = ko.observableArray(staticData);
+
+    self.query = ko.observable();
+
+    self.filteredCourses = ko.computed(function(){
+        var filtered = [];
+        var orig = self.courses();
+        var query = self.query();
+        if(query!=null && query.trim().length>0 ){
+            for(var index=0;index<orig.length;index++){
+                var course = orig[index];
+                if(course.courseName.indexOf(query)>=0 || course.courseDescription.indexOf(query)>=0){
+                    filtered.push(course);
+                }
+            }
+        }
+        else{
+            filtered = orig;
+        }
+        return filtered;
+    })
+
+    //Observables to hold value of new Course form fields
+    self.newCourseIcon = ko.observable();
+    self.newCourseName = ko.observable();
+    self.newCourseDescription = ko.observable();
+
+
+    //Object to hold the last known error
+    self.lastKnownError = ko.observable(null);
+
+    //Callback to add a new course
+    self.addNewCourse = function(){
+        self.lastKnownError(null);
+        if(self.newCourseIcon()!=null
+            && self.newCourseName()!=null
+            && self.newCourseDescription()!=null
+            ){
+            this.courses.push(
+                {
+                    courseIcon:self.newCourseIcon(),
+                    courseName:self.newCourseName(),
+                    courseDescription:self.newCourseDescription()
+                }
+            );
+        }
+        else{
+            self.lastKnownError('None of Course Icon, Name or Description can be empty');
+        }
+        self.newCourseIcon(null);
+        self.newCourseName(null);
+        self.newCourseDescription(null);
+    }
+
+
+    self.clearError = function(){
+        self.lastKnownError(null);
+    }
+
+}
+
+// Activates knockout.js
+ko.applyBindings(new AppViewModel());
+            </pre>
+<a href="#TOC">Table of Contents</a>
+<hr/>
+</article>
+<article>
+<h3 class="topic"><a name="advanced-knockout">Chapter - 7 Advanced KnoctOutJs</a> - Inline Editing - <a href="chapter-7/index.html" target="_blank">Launch</a>
+</h3>
+<iframe src="chapter-7/index.html" width="100%" height="550px"></iframe>
+<p>
+    <b>Inline Editing</b> -
+    We move to the most complicated part of the problem, that is inline Editing.
+    We need few things here before we can begin
+<ul>
+    <li><b>Observable Attributes</b> - Each of the Course attributes should become Observable. This is required because
+        when we edit the values of Course's attribute in Edit Mode, they should reflect changed in the View Mode
+    </li>
+    <li><b>Editing Field</b> - For each Course we will add a boolean attribute called 'attribute', so we know that we
+        are editing that paritcular course. No this is not pollution of Domain Class, as we are doing this in the View
+        Model class. Remember ViewModel class is specific to View
+    </li>
+    <li><b>Virtual Ko tag</b> - If you have observed we have always used the data-bind attribute with some html element.
+        However, there will be times when we want to do if else in the html template. e.g If course.editing == false,
+        show only view part, if course.editing == true, show only the editor part
+    </li>
+</ul>
+
+The first change can be seen as follows. Now all attributes of course have become observable.
+The second change is that a new "editing" attribute has been added to the course to indicate where the course is being
+edited or not
+                <pre class="code">
+var staticData = [
+        {
+            courseIcon:ko.observable("A"),
+            courseName:ko.observable("Android Basics"),
+            courseDescription:ko.observable("Teaches Hello World Application in Android"),
+            editing:ko.observable(false)
+
+        },
+        {
+            courseIcon:ko.observable("i"),
+            courseName:ko.observable("iOS Basics"),
+            courseDescription:ko.observable("Teaches Hello World Application in iOS"),
+            editing:ko.observable(false)
+        },
+        {
+            courseIcon:ko.observable("H"),
+            courseName:ko.observable("HTML5 Basics"),
+            courseDescription:ko.observable("Teaches HTML5 Fundamentals"),
+            editing:ko.observable(false)
+        },
+        {
+            courseIcon:ko.observable("C"),
+            courseName:ko.observable("CSS 3 Basics"),
+            courseDescription:ko.observable("Teaches CSS3 Fundamentals"),
+            editing:ko.observable(false)
+
+        },
+        {
+            courseIcon:ko.observable("M"),
+            courseName:ko.observable("MongoDB Basics"),
+            courseDescription:ko.observable("MongoDB Primer"),
+            editing:ko.observable(false)
+        }
+    ]
+                </pre>
+The third change is in the HTML Template, a snippet of it is shown below
+            <pre class="code">
+&lt;tbody data-bind="foreach: filteredCourses" &gt;
+&lt;tr class="course"&gt;
+    ** The Viewer Part
+    &lt;!-- ko if: editing() == false --&gt;
+    &lt;td&gt;
+        &lt;div class="clogo" data-bind="text:courseIcon"&gt;&lt;/div&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+        &lt;div class="name" data-bind="text:courseName"&gt;&lt;/div&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+        &lt;div class="description" data-bind="text:courseDescription"&gt;&lt;/div&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+        &lt;button data-bind="click: $parent.startEditing"&gt;Edit&lt;/button&gt; &lt;button data-bind="click:$parent.deleteCourse"&gt;X&lt;/button&gt;
+    &lt;/td&gt;
+    &lt;!-- /ko --&gt;
+
+    ** The Editor Part
+    &lt;!-- ko if: editing() == true --&gt;
+    &lt;td&gt;
+        &lt;input type="text" data-bind="value:courseIcon, valueUpdate: 'afterkeydown'"&gt; &lt;/input&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+        &lt;input type="text" data-bind="value:courseName, valueUpdate: 'afterkeydown'"&gt; &lt;/input&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+        &lt;input type="text" data-bind="value:courseDescription, valueUpdate: 'afterkeydown'"&gt; &lt;/input&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+        &lt;button data-bind="click:$parent.doneEditing"&gt;Done&lt;/button&gt;
+    &lt;/td&gt;
+    &lt;!-- /ko --&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+            </pre>
+The functions startEditing and doneEditing look as below
+            <pre class="code">
+self.startEditing = function(){
+    this.editing(true);
+}
+self.doneEditing = function(){
+    this.editing(false);
+}
+            </pre>
+</p>
+<b><u>HTML Source</u></b>
+            <pre class="code">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Synerzip's HTML5 Summit&lt;/title&gt;
+    &lt;link rel="stylesheet" href="/resources/css/main.css"/&gt;
+    &lt;script type="text/javascript" src="knockout-2.2.1.js"&gt;&lt;/script&gt;
+    &lt;style&gt;
+        ......
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;section class='container'&gt;
+    &lt;header class='header'&gt;
+        &lt;img class='logo' src='/resources/images/synerzip-logo-hi-res.gif'&gt;&lt;/img&gt;
+    &lt;/header&gt;
+    &lt;hr/&gt;
+    &lt;section class="content"&gt;
+        &lt;h1&gt;KnockoutJs - Handling Events&lt;/h1&gt;
+        &lt;hr/&gt;
+        &lt;h3&gt;Courses&lt;/h3&gt;
+        &lt;div&gt;
+            Search:&lt;input type="text" data-bind="value:query, valueUpdate: 'afterkeydown'"&gt;&lt;button data-bind="click: function(){query(null)}"&gt;X&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div data-bind="visible: lastKnownError()!=null" class="errorMessage"&gt;
+            &lt;table&gt;
+                &lt;tr&gt;
+
+                    &lt;td&gt;&lt;div data-bind="text:lastKnownError"&gt;&lt;/div&gt;&lt;/td&gt;
+                    &lt;td&gt;&lt;button data-bind="click:clearError"&gt;X&lt;/button&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+        &lt;table&gt;
+            &lt;thead&gt;
+                &lt;tr class="course-header"&gt;
+                    &lt;td&gt;Icon&lt;/td&gt;
+                    &lt;td&gt;Name&lt;/td&gt;
+                    &lt;td&gt;Description&lt;/td&gt;
+                    &lt;td&gt;Actions&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr class="course-header"&gt;
+                    &lt;form data-bind="submit:addNewCourse"&gt;
+                    &lt;td&gt;&lt;input type="text" data-bind="value:newCourseIcon, valueUpdate: 'afterkeydown'"&gt; &lt;/input&gt; &lt;/td&gt;
+                    &lt;td&gt;&lt;input type="text" data-bind="value:newCourseName, valueUpdate: 'afterkeydown'"&gt; &lt;/input&gt;&lt;/td&gt;
+                    &lt;td&gt;&lt;input type="text" data-bind="value:newCourseDescription, valueUpdate: 'afterkeydown'"&gt; &lt;/input&gt;&lt;/td&gt;
+                    &lt;td&gt;&lt;button data-bind="click:addNewCourse"&gt;Add New Course&lt;/button&gt;&lt;/td&gt;
+                    &lt;/form&gt;
+                &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody data-bind="foreach: filteredCourses" &gt;
+            &lt;tr class="course"&gt;
+                &lt;!-- ko if: editing() == false --&gt;
+                &lt;td&gt;
+                    &lt;div class="clogo" data-bind="text:courseIcon"&gt;&lt;/div&gt;
+                &lt;/td&gt;
+                &lt;td&gt;
+                    &lt;div class="name" data-bind="text:courseName"&gt;&lt;/div&gt;
+                &lt;/td&gt;
+                &lt;td&gt;
+                    &lt;div class="description" data-bind="text:courseDescription"&gt;&lt;/div&gt;
+                &lt;/td&gt;
+                &lt;td&gt;
+                    &lt;button data-bind="click: $parent.startEditing"&gt;Edit&lt;/button&gt; &lt;button data-bind="click:$parent.deleteCourse"&gt;X&lt;/button&gt;
+                &lt;/td&gt;
+                &lt;!-- /ko --&gt;
+                &lt;!-- ko if: editing() == true --&gt;
+                &lt;td&gt;
+                    &lt;input type="text" data-bind="value:courseIcon, valueUpdate: 'afterkeydown'"&gt; &lt;/input&gt;
+                &lt;/td&gt;
+                &lt;td&gt;
+                    &lt;input type="text" data-bind="value:courseName, valueUpdate: 'afterkeydown'"&gt; &lt;/input&gt;
+                &lt;/td&gt;
+                &lt;td&gt;
+                    &lt;input type="text" data-bind="value:courseDescription, valueUpdate: 'afterkeydown'"&gt; &lt;/input&gt;
+                &lt;/td&gt;
+                &lt;td&gt;
+                    &lt;button data-bind="click:$parent.doneEditing"&gt;Done&lt;/button&gt;
+                &lt;/td&gt;
+                &lt;!-- /ko --&gt;
+            &lt;/tr&gt;
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+
+    &lt;/section&gt;
+&lt;/section&gt;
+
+&lt;script type="text/javascript" src="app.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </pre>
+<b><u>JavaScript Source</u></b>
+            <pre class="code">
+function AppViewModel() {
+    var staticData = [
+        {
+            courseIcon:ko.observable("A"),
+            courseName:ko.observable("Android Basics"),
+            courseDescription:ko.observable("Teaches Hello World Application in Android"),
+            editing:ko.observable(false)
+
+        },
+        {
+            courseIcon:ko.observable("i"),
+            courseName:ko.observable("iOS Basics"),
+            courseDescription:ko.observable("Teaches Hello World Application in iOS"),
+            editing:ko.observable(false)
+        },
+        {
+            courseIcon:ko.observable("H"),
+            courseName:ko.observable("HTML5 Basics"),
+            courseDescription:ko.observable("Teaches HTML5 Fundamentals"),
+            editing:ko.observable(false)
+        },
+        {
+            courseIcon:ko.observable("C"),
+            courseName:ko.observable("CSS 3 Basics"),
+            courseDescription:ko.observable("Teaches CSS3 Fundamentals"),
+            editing:ko.observable(false)
+
+        },
+        {
+            courseIcon:ko.observable("M"),
+            courseName:ko.observable("MongoDB Basics"),
+            courseDescription:ko.observable("MongoDB Primer"),
+            editing:ko.observable(false)
+        }
+    ]
+    var self = this;
+    //Observable Array which holds all courses
+    self.courses = ko.observableArray(staticData);
+
+    self.query = ko.observable();
+
+    self.filteredCourses = ko.computed(function(){
+        var filtered = [];
+        var orig = self.courses();
+        var query = self.query();
+        if(query!=null && query.trim().length>0 ){
+            for(var index=0;index<orig.length;index++){
+                var course = orig[index];
+                if(course.courseName().indexOf(query)>=0 || course.courseDescription().indexOf(query)>=0){
+                    filtered.push(course);
+                }
+            }
+        }
+        else{
+            filtered = orig;
+        }
+        return filtered;
+    })
+
+    //Observables to hold value of new Course form fields
+    self.newCourseIcon = ko.observable();
+    self.newCourseName = ko.observable();
+    self.newCourseDescription = ko.observable();
+
+
+    //Object to hold the last known error
+    self.lastKnownError = ko.observable(null);
+
+    //Callback to add a new course
+    self.addNewCourse = function(){
+        self.lastKnownError(null);
+        if(self.newCourseIcon()!=null
+            && self.newCourseName()!=null
+            && self.newCourseDescription()!=null
+            ){
+            this.courses.push(
+                {
+                    courseIcon:ko.observable(self.newCourseIcon()),
+                    courseName:ko.observable(self.newCourseName()),
+                    courseDescription:ko.observable(self.newCourseDescription()),
+                    editing:ko.observable(false)
+                }
+            );
+        }
+        else{
+            self.lastKnownError('None of Course Icon, Name or Description can be empty');
+        }
+        self.newCourseIcon(null);
+        self.newCourseName(null);
+        self.newCourseDescription(null);
+    }
+
+    //Callback to remove a Course
+    self.deleteCourse = function(){
+        self.lastKnownError(null);
+        //this points to the current row (course)
+        self.courses.remove(this);
+    }
+
+    self.startEditing = function(){
+        this.editing(true);
+    }
+    self.doneEditing = function(){
+        this.editing(false);
+    }
+
+    self.clearError = function(){
+        self.lastKnownError(null);
+    }
+
+}
+
+// Activates knockout.js
+ko.applyBindings(new AppViewModel());
+            </pre>
+<a href="#TOC">Table of Contents</a>
+<hr/>
+</article>
+
+</section>
+</section>
+
+</body>
+</html>

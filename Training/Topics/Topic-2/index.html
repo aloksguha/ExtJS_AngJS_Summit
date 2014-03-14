@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Synerzip's HTML5 Summit</title>
+    <link rel="stylesheet" href="/resources/css/main.css"/>
+    <script type="text/javascript" src="jquery.js"></script>
+</head>
+<body>
+<section class='container'>
+    <header class='header'>
+        <img class='logo' src='/resources/images/synerzip-logo-hi-res.gif'/>
+    </header>
+    <a href="/index.html">Return to Main Page</a>
+    <hr/>
+    <section class="content">
+        <article>
+            <img src="jquery_logo1.png" width="200px" height="60px"/>
+
+            <hr/>
+        </article>
+        <article>
+            <h1><a name="TOC">Table of Contents</a></h1>
+            <ul>
+                <li><a href="#jquery">What is jQuery</a></li>
+                <li><a href="#$vs$()">$ vs $()</a></li>
+                <li><a href="#document-ready">$( document ).ready()</a></li>
+                <li><a href="#selectors">jQuery Selectors</a></li>
+                <li><a href="#traversing">Traversing (Parent, Child and Sibling selectors)</a></li>
+                <li><a href="#working-with-selections">Working with Selections</a></li>
+                <li><a href="#dom-manipulation">DOM Manipulation</a></li>
+                <li><a href="#iterating">Iterating over jQuery and non-jQuery Objects</a></li>
+                <li><a href="#events">Event handling introduction</a></li>
+                <li><a href="#events-best-practices">Event handling best practices</a></li>
+                <li><a href="#avoid-conflicts">Avoiding Conflicts with Other Libraries</a></li>
+            </ul>
+            <hr/>
+        </article>
+        <article>
+            <h3 class="topic"><a name="jquery">What is jQuery</a></h3>
+
+            <p>
+                jQuery is a fast, small, and feature-rich JavaScript library. It makes things like HTML document
+                traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API
+                that works across a multitude of browsers.
+            </p>
+            <a href="#TOC">Table of Contents</a>
+            <hr/>
+
+        </article>
+        <article>
+            <h3 class="topic"><a name="$vs$()">$ vs $()</a></h3>
+
+            <p>
+                There are two type of methods jQyery provides.
+                <ul>
+                    <li><b>$.fn</b> - Methods are called on jQuery objects comes under $.fn namespace.
+                        <pre class="code">
+//removes all header 1 elements
+$("h1").remove();
+                        </pre>
+                    </li>
+                    <li><b>$</b> - Methods in the $ namespace are generally utility-type methods, and do not work with
+                        selections
+                        <pre class="code">
+// returns "lots of extra whitespace"
+$.trim("    lots of extra whitespace    ");
+                        </pre>
+                    </li>
+                </ul>
+            </p>
+            <a href="#TOC">Table of Contents</a>
+            <hr/>
+
+        </article>
+        <article>
+            <h3 class="topic"><a name="document-ready">$( document ).ready()</a></h3>
+
+            <p>
+                A page can't be manipulated safely until the document is "ready." jQuery detects this state of readiness
+                for you. Code included inside <code>$( document ).ready()</code> will only run once the page DOM
+                (Document Object Model) is ready for JavaScript code to execute. Code included inside <code>$( window ).
+                load(function(){ ... })</code> will run once the entire page (images or iframes), not just the DOM, is
+                ready.
+            </p>
+            <pre class="code">
+// A $( document ).ready() block
+$( document ).ready(function() {
+  console.log("ready!");
+});
+            </pre>
+            <pre class="code">
+// Shorthand for $( document ).ready()
+$(function() {
+  console.log("ready!");
+});
+            </pre>
+            <a href="#TOC">Table of Contents</a>
+            <hr/>
+        </article>
+        <article>
+            <h3 class="topic"><a name="selectors">jQuery Selectors</a>
+                - <a href="example1/index.html" target="_blank">Launch</a>
+            </h3>
+
+            <h2>Basic</h2>
+            <p>
+                The most basic concept of jQuery is to "select some elements and do something with them."
+                jQuery supports most CSS3 selectors, as well as some non-standard selectors. Below are some examples of
+                selectors.
+            </p>
+            <iframe src="example1/index.html" width="100%" height="500px"></iframe>
+            <ul>
+                <li>
+                    <b>Selecting Elements by ID</b>
+                    <pre class="code">
+// Selecting elements by ID
+$("#myId"); // note IDs must be unique per page
+                    </pre>
+                </li>
+                <li>
+                    <b>Selecting Elements by Class Name</b>
+                    <pre class="code">
+// Selecting elements by class name
+$(".myClass");
+                    </pre>
+                </li>
+                <li>
+                    <b>Selecting Elements by Attribute</b>
+                    <pre class="code">
+// Selecting elements by attribute
+$("input[name='first_name']"); // beware, this can be very slow in older browsers
+                    </pre>
+                </li>
+                <li>
+                    <b>Selecting Elements by Compound CSS Selector</b>
+                    <pre class="code">
+// Selecting elements by compound CSS selector
+$("#contents ul.people li");
+                    </pre>
+                </li>
+                <li>
+                    <b>Pseudo-selectors</b>
+                    <pre class="code">
+// Pseudo-selectors
+$("a.external:first");
+$("tr:odd");
+
+// select all input-like elements in a form (more on this below)
+$("#myForm :input");
+$("div:visible");
+
+// all except the first three divs
+$("div:gt(2)");
+                    </pre>
+                </li>
+            </ul>
+
+            <hr/>
+            <h2>Advance</h2>
+            <h3>Some Tips</h3>
+            <ul>
+                <li>
+                    <b>Choosing Selectors</b>
+                    <p>Choosing good selectors is one way to improve JavaScript's performance.</p>
+                    <ul>
+                        <li>
+                            Wherever possible, make selections using IDs, class names, and tag names.
+                        </li>
+                        <li>
+                            Try to be specific in your selection. For ex: Including type when selecting elements by class
+                            name
+                            <pre class="code">
+$("div.foo");
+                            </pre>
+                        </li>
+                        <li>
+                            On the other hand, too much specificity can be a bad thing
+                            <pre class="code">
+$("#myTable thead tr th.special"); //This will overkill.
+$("#myTable th.special"); //instead go for this.
+                            </pre>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <b>How to check selection contains any element?</b>
+
+                    <pre class="code">
+//Testing whether a selection contains elements
+if ( $("div.foo").length ) {
+  ...
+}
+                    </pre>
+                </li>
+
+                <li>
+                    <b>Saving selections</b>
+                    <pre class="code">
+var $divs = $("div");
+                    </pre>
+                </li>
+                <li>
+                    <b>Refining and Filtering Selections</b>
+
+                    <pre class="code">
+// Refining selections
+$("div.foo").has("p");          // div.foo elements that contain &lt;p&gt; tags
+$("h1").not(".bar");            // h1 elements that don't have a class of bar
+$("ul li").filter(".current");  // unordered list items with class of current
+$("ul li").first();             // just the first unordered list item
+$("ul li").eq( 5 );             // the sixth
+                    </pre>
+                </li>
+            </ul>
+            <a href="#TOC">Table of Contents</a>
+            <hr/>
+        </article>
+
+        <article>
+            <h3 class="topic"><a name="traversing">Traversing (Parent, Child and Sibling selectors)</a>
+                - <a href="example2/index.html" target="_blank">Launch</a>
+            </h3>
+
+            <iframe src="example2/index.html" width="100%" height="500px"></iframe>
+            <ul>
+                <li>
+                    <b>Parents</b>
+                    <b>HTML code</b>
+                    <pre class="code">
+&lt;div class="grandparent"&gt;
+    &lt;div class="parent"&gt;
+        &lt;div class="child"&gt;
+            &lt;span class="subchild"&gt;&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="surrogateParent1"&gt;&lt;/div&gt;
+    &lt;div class="surrogateParent2"&gt;&lt;/div&gt;
+&lt;/div&gt;
+                    </pre>
+                    <b>JS code</b>
+                    <pre class="code">
+// Selecting an element's direct parent
+
+// returns [ div.child ]
+$("span.subchild").parent();
+
+// returns [ div.child, div.parent, div.grandparent ]
+$("span.subchild").parents();
+
+// Selecting all the parents of an element up to, but *not including* the selector
+
+// returns [ div.child, div.parent ]
+$("span.subchild").parentsUntil("div.grandparent");
+                    </pre>
+                </li>
+                <li>
+                    <b>Children</b>
+                    <b>HTML code</b>
+                    <pre class="code">
+&lt;div class="grandparent"&gt;
+    &lt;div class="parent"&gt;
+        &lt;div class="child"&gt;
+            &lt;span class="subchild"&gt;&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="surrogateParent1"&gt;&lt;/div&gt;
+    &lt;div class="surrogateParent2"&gt;&lt;/div&gt;
+&lt;/div&gt;
+                    </pre>
+                    <b>JS code</b>
+                    <pre class="code">
+// Selecting an element's direct children
+
+// returns [ div.parent, div.surrogateParent1, div.surrogateParent2 ]
+$("div.grandparent").children("div");
+
+// Finding all elements within a selection that match the selector
+
+// returns [ div.child, div.parent, div.surrogateParent1, div.surrogateParent2 ]
+$("div.grandparent").find("div");
+                    </pre>
+                </li>
+                <li>
+                    <b>Siblings</b>
+                    <b>HTML code</b>
+                    <pre class="code">
+&lt;div class="grandparent"&gt;
+    &lt;div class="parent"&gt;
+        &lt;div class="child"&gt;
+            &lt;span class="subchild"&gt;&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="surrogateParent1"&gt;&lt;/div&gt;
+    &lt;div class="surrogateParent2"&gt;&lt;/div&gt;
+&lt;/div&gt;
+                    </pre>
+                    <b>JS code</b>
+                    <pre class="code">
+// Selecting a next sibling of the selectors
+
+// returns [ div.surrogateParent1 ]
+$("div.parent").next();
+
+// Selecting a prev sibling of the selectors
+
+// returns [] as No sibling exists before div.parent
+$("div.parent").prev();
+
+// Selecting all the next siblings of the selector
+
+// returns [ div.surrogateParent1, div.surrogateParent2 ]
+$("div.parent").nextAll();
+
+// Selecting all the previous siblings of the selector
+
+// returns [ div.surrogateParent1, div.parent ]
+$("div.surrogateParent2").prevAll();
+
+// Selecting an element's siblings in both directions that matches the given selector
+
+// returns [ div.surrogateParent1, div.surrogateParent2 ]
+$("div.parent").siblings();
+                    </pre>
+                </li>
+            </ul>
+            <a href="#TOC">Table of Contents</a>
+            <hr/>
+        </article>
+
+        <article>
+            <h3 class="topic"><a name="working-with-selections">Working with Selections</a>
+                - <a href="example3/index.html" target="_blank">Launch</a>
+            </h3>
+
+            <iframe src="example3/index.html" width="100%" height="500px"></iframe>
+            <ul>
+                <li>
+                    <b>Getters and Setters</b>
+                    <pre class="code">
+//The $.fn.html method used as a setter
+$("h1").html("hello world");
+
+// The html method used as a getter
+$("h1").html();
+                    </pre>
+                </li>
+                <li>
+                    <b>Chaining</b>
+                    <pre class="code">
+// Chaining
+$("#content").find("h3").eq( 2 ).html("new text for the third h3!");
+
+// Formatting chained code
+$("#content")
+  .find("h3")
+  .eq( 2 )
+  .html("new text for the third h3!");
+                    </pre>
+                </li>
+            </ul>
+            <a href="#TOC">Table of Contents</a>
+            <hr/>
+        </article>
+
+        <article>
+            <h3 class="topic"><a name="dom-manipulation">DOM Manipulation</a>
+                - <a href="example4/index.html" target="_blank">Launch</a>
+            </h3>
+
+            <iframe src="example4/index.html" width="100%" height="500px"></iframe>
+            <p>
+                jQuery makes DOM manipulation very simple. There are many ways to change existing element. Among
+                most common is changing inner HTML.
+                <pre class="code">
+// Changing the HTML of an element
+$("#myDiv p:first").html("New &lt;strong&gt;first&lt;/strong&gt; paragraph!");
+                </pre>
+            </p>
+
+            <p>
+                Below are various types of DOM manipulation.
+            </p>
+            <ul>
+                <li>
+                    <b>Moving, Copying, and Removing Elements</b>
+                    <p>There are following approaches to move element around DOM.</p>
+                    <ul>
+                        <li>
+                            Place the selected element(s) relative to another element. This can be achieved by
+                            <code>$.fn.insertAfter</code>, <code>$.fn.insertBefore</code>, <code>$.fn.appendTo</code>
+                            etc methods.
+                        </li>
+                        <li>
+                            Place an element relative to the selected element(s). This can be achieved by
+                            <code>$.fn.after</code>, <code>$.fn.before</code>, <code>$.fn.append</code>
+                            etc methods.
+                        </li>
+                    </ul>
+                    <pre class="code">
+// Moving elements using different approaches
+
+// make the first list item the last list item
+var $li = $("#myList li:first").appendTo("#myList");
+
+// another approach to the same problem
+$("#myList").append( $("#myList li:first") );
+
+// note that there's no way to access the
+// list item that we moved, as this returns
+// the list itself
+                    </pre>
+                </li>
+
+                <li>
+                    <b>Cloning Elements</b>
+                    <p>
+                        Methods such as $.fn.appendTo move the element, but sometimes a copy of the element is needed
+                        instead. In this case, use $.fn.clone first:
+                    </p>
+                    <pre class="code">
+// Making a copy of an element
+
+// copy the first list item to the end of the list
+$("#myList li:first").clone().appendTo("#myList");
+                    </pre>
+                </li>
+
+                <li>
+                    <b>Removing Elements</b>
+                    <p>There are two ways to remove elements</p>
+                    <ul>
+                        <li>
+                            Use <code>$.fn.remove</code> when you want  to permanently remove the selection from the
+                            page. While this does return the removed element(s), those elements will not have
+                            their associated data and events attached to them if you return them to the page.
+                        </li>
+                        <li>
+                            Use <code>$.fn.detach</code> if you need the data and events to persist. Like
+                            <code>$.fn.remove</code>, it returns the selection, but it also maintains the data and
+                            events associated with the selection, so you can restore the selection to the page at a later time.
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+
+                    <b>Creating New Elements</b>
+                    <p>
+                        jQuery offers a trivial and elegant way to create new elements using the same $() method used
+                        to make selections:
+                    </p>
+                    <pre class="code">
+// Creating new elements from an HTML string
+$("&lt;p&gt;This is a new paragraph&lt;/p&gt;");
+
+$("&lt;li class=\"new\"&gt;new list item&lt;/li&gt;");
+
+// Creating a new element with an attribute object
+$( "&lt;a/&gt;", {
+html : "This is a &lt;strong&gt;new&lt;/strong&gt; link",
+"class" : "new",
+href : "foo.html"
+});
+                    </pre>
+                </li>
+
+                <li>
+                    <b>Manipulating Attributes</b>
+                    <pre class="code">
+// Manipulating a single attribute
+$("#myDiv a:first").attr( "href", "newDestination.html" );
+
+// Manipulating multiple attributes
+$("#myDiv a:first").attr({
+  href: "newDestination.html",
+  rel: "super-special"
+});
+
+// Using a function to determine an attribute's new value
+$("#myDiv a:first").attr({
+    rel: "super-special",
+    href: function( idx, href ) {
+      return "/new/" + href;
+    }
+});
+                    </pre>
+                </li>
+            </ul>
+            <a href="#TOC">Table of Contents</a>
+            <hr/>
+        </article>
+
+        <article>
+            <h3 class="topic"><a name="iterating">Iterating over jQuery and non-jQuery Objects</a>
+                - <a href="example5/index.html" target="_blank">Launch</a>
+            </h3>
+
+            <iframe src="example5/index.html" width="100%" height="500px"></iframe>
+            <p>
+                jQuery provides variety of iterator such as utility method $.each() as well as jQuery collection
+                iterator .each().
+            </p>
+
+            <ul>
+                <li>
+                    <b><code>$.each()</code></b>
+                    <p>
+                        <code>$.each</code> is a generic iterator function for looping over object, arrays, and
+                        array-like objects. Plain objects are iterated via their named properties while arrays and
+                        array-like objects are iterated via their indices.
+                    </p>
+
+                    <pre>
+var sum = 0;
+
+var arr = [ 1, 2, 3, 4, 5 ];
+
+$.each( arr, function( index, value ){
+  sum += value;
+});
+
+console.log( sum );     //15
+
+var sum = 0;
+var obj = {
+  foo: 1,
+  bar: 2
+}
+
+$.each( obj, function( key, value ) {
+  sum += value;
+});
+
+console.log( sum ); // 3
+                    </pre>
+                </li>
+
+                <li>
+                    <b><code>.each()</code></b>
+                    <p>
+                        <code>.each()</code> is used directly on a jQuery collection. It iterates over each matched
+                        element in the collection and performs a callback on that object.
+                    </p>
+                    <pre class="code">
+&lt;ul&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Link 1&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Link 2&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Link 3&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+$("li").each( function( index, element ){
+  console.log( $( this ).text() );
+});
+
+// Logs the following:
+// Link 1
+// Link 2
+// Link 3
+                    </pre>
+                </li>
+                <a href="#TOC">Table of Contents</a>
+            </ul>
+
+            <b><u>HTML CODE</u></b>
+            <pre class="code">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Synerzip's HTML5 Summit&lt;/title&gt;
+    &lt;link rel="stylesheet" href="/resources/css/main.css"/&gt;
+    &lt;script type="text/javascript" src="../jquery.js"&gt;&lt;/script&gt;
+    &lt;style&gt;
+        .course-header {
+            height:30px;
+            text-decoration: underline;
+            font-weight:bold;
+        }
+        .course {
+            height:30px;
+        }
+
+        .course .clogo {
+            border-radius: 999px;
+            width: 18px;
+            height: 18px;
+            padding: 4px;
+            background: #fff;
+            border: 2px solid #666;
+            color: #666;
+            text-align: center;
+        }
+
+        .course .name {
+            width: 140px;
+        }
+
+        .course .description {
+            width: 400px;
+        }
+
+        .errorMessage{
+            color:red;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;section class='container'&gt;
+    &lt;header class='header'&gt;
+        &lt;img class='logo' src='/resources/images/synerzip-logo-hi-res.gif'&gt;&lt;/img&gt;
+    &lt;/header&gt;
+    &lt;hr/&gt;
+    &lt;section class="content"&gt;
+        &lt;h1&gt;Iterating over jQuery&lt;/h1&gt;
+        &lt;hr/&gt;
+        &lt;h3&gt;Courses&lt;/h3&gt;
+
+        &lt;table id="myTable"&gt;
+            &lt;thead&gt;
+                &lt;tr class="course-header"&gt;
+                    &lt;td&gt;Icon&lt;/td&gt;
+                    &lt;td&gt;Name&lt;/td&gt;
+                    &lt;td&gt;Description&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody &gt;
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+        &lt;button onclick="(new AppViewModel).fillStaticData()"&gt;Fill static data&lt;/button&gt;
+    &lt;/section&gt;
+&lt;/section&gt;
+&lt;script type="text/javascript" src="app.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </pre>
+
+            <b><u>JavaScript code</u></b>
+            <pre class="code">
+function AppViewModel() {
+    this.staticData = [
+        {
+            courseIcon:"A",
+            courseName:"Android Basics",
+            courseDescription:"Teaches Hello World Application in Android"
+        },
+        {
+            courseIcon:"i",
+            courseName:"iOS Basics",
+            courseDescription:"Teaches Hello World Application in iOS"
+
+        },
+        {
+            courseIcon:"H",
+            courseName:"HTML5 Basics",
+            courseDescription:"Teaches HTML5 Fundamentals"
+        },
+        {
+            courseIcon:"C",
+            courseName:"CSS 3 Basics",
+            courseDescription:"Teaches CSS3 Fundamentals"
+        },
+        {
+            courseIcon:"M",
+            courseName:"MongoDB Basics",
+            courseDescription:"MongoDB Primer"
+        }
+    ];
+
+    this.strTrContain  = '&lt;tr class="course"&gt;';
+    this.strTrContain +=     '&lt;td&gt;&lt;div class="clogo"&gt;&lt;/div&gt;&lt;/td&gt;';
+    this.strTrContain +=     '&lt;td&gt;&lt;div class="name" &gt;&lt;/div&gt;&lt;/td&gt;';
+    this.strTrContain +=     '&lt;td&gt;&lt;div class="description" &gt;&lt;/div&gt;&lt;/td&gt;';
+    this.strTrContain += '&lt;/tr&gt;';
+
+    this.fillStaticData= function(){
+        var self = this;
+        $.each(this.staticData,function(index,value){
+            self.addNewRow(value['courseIcon'],value['courseName'],value['courseDescription']);
+        });
+    }
+
+    this.addNewRow =    function(icon,name,description){
+        var trContain = $(this.strTrContain);
+        trContain.find('div.clogo').html(icon);
+        trContain.find('div.name').html(name);
+        trContain.find('div.description').html(description);
+
+        $('#myTable tbody').append(trContain.clone(true));
+    }
+}
+            </pre>
+            <hr/>
+        </article>
+
+        <article>
+            <h3 class="topic"><a name="events">Event handling introduction</a>
+                - <a href="example6/index.html" target="_blank">Launch</a>
+            </h3>
+
+            <iframe src="example6/index.html" width="100%" height="500px"></iframe>
+            <p>
+                Web pages are all about interaction. Users perform a countless number of actions such as moving their
+                mice over the page, clicking on elements, and typing in textboxes — all of these are examples of
+                events. In addition to these user events, there are a slew of others that occur, like when the page is
+                loaded, when video begins playing or is paused, etc. Whenever something interesting occurs on the page,
+                an event is fired, meaning that the browser basically announces that something has happened. It's this
+                announcement that allows developers to "listen" for events and react to them appropriately.
+            </p>
+
+            <b>Ways to listen for events</b>
+
+            <pre class="code">
+&lt;button onclick="alert('Hello')"&gt;Say hello&lt;/button&gt;
+            </pre>
+
+            <p>
+                This is inefficient way to achieve because of following reason.
+                <ul>
+                    <li>
+                        First, we're coupling our view code (HTML) with our interaction code (JS). That means that
+                        whenever we need to update functionality, we'd have to edit our HTML which is just a bad
+                        practice and a maintenance nightmare.
+                    </li>
+                    <li>
+                        Second, it's not scalable. If you had to attach this functionality onto numerous buttons,
+                        you'd not only bloat the page with a bunch of repetitious code, but you would again destroy
+                        maintainability.
+                    </li>
+                </ul>
+            </p>
+
+            <p>
+                This can be achieved by jQuery.
+
+                <pre class="code">
+&lt;button id="helloBtn" &gt;Say hello&lt;/button&gt;
+
+// Event binding using a jQuery method
+$( "#helloBtn" ).click(function( event ) {
+    alert( "Hello." );
+});
+
+//There are number of ways you can attach event using jQuery some of them are as below
+// Attach an event handler directly the to button using jQuery's
+// `bind` method, passing it an event string of `click`
+$( "#helloBtn" ).bind( "click", function( event ) {
+    alert( "Hello." );
+});
+
+// using jQuery's `on` method.
+$( "#helloBtn" ).on( "click", function( event ) {
+    alert( "Hello." );
+});
+                </pre>
+            </p>
+
+            <b><u>HTML Code</u></b>
+            <pre class="code">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Synerzip's HTML5 Summit&lt;/title&gt;
+    &lt;link rel="stylesheet" href="/resources/css/main.css"/&gt;
+    &lt;script type="text/javascript" src="../jquery.js"&gt;&lt;/script&gt;
+    &lt;style&gt;
+        .course-header {
+            height:30px;
+            text-decoration: underline;
+            font-weight:bold;
+        }
+        .course {
+            height:30px;
+        }
+
+        .course .clogo {
+            border-radius: 999px;
+            width: 18px;
+            height: 18px;
+            padding: 4px;
+            background: #fff;
+            border: 2px solid #666;
+            color: #666;
+            text-align: center;
+
+
+        }
+
+        .course .name {
+            width: 140px;
+
+        }
+
+        .course .description {
+            width: 400px;
+        }
+
+        .errorMessage{
+            color:red;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;script type="text/javascript" src="app.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+    $(function(){
+        var appModel = new AppViewModel();
+        appModel.fillStaticData();
+         $("#addNewCourse").click(function(){
+                appModel.addNewData();
+         });
+    });
+&lt;/script&gt;
+&lt;body&gt;
+&lt;section class='container'&gt;
+    &lt;header class='header'&gt;
+        &lt;img class='logo' src='/resources/images/synerzip-logo-hi-res.gif'&gt;&lt;/img&gt;
+    &lt;/header&gt;
+    &lt;hr/&gt;
+    &lt;section class="content"&gt;
+        &lt;h1&gt;Iterating over jQuery&lt;/h1&gt;
+        &lt;hr/&gt;
+        &lt;h3&gt;Courses&lt;/h3&gt;
+
+        &lt;table id="myTable"&gt;
+            &lt;thead&gt;
+                &lt;tr class="course-header"&gt;
+                    &lt;td&gt;Icon&lt;/td&gt;
+                    &lt;td&gt;Name&lt;/td&gt;
+                    &lt;td&gt;Description&lt;/td&gt;
+                    &lt;td&gt;Actions&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr class="course-header"&gt;
+                        &lt;td&gt;&lt;input type="text" id="newIcon"&gt; &lt;/input&gt; &lt;/td&gt;
+                        &lt;td&gt;&lt;input type="text" id="newName"&gt; &lt;/input&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;input type="text" id="newDescription"&gt; &lt;/input&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;button id='addNewCourse'&gt;Add New Course&lt;/button&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody &gt;
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+    &lt;/section&gt;
+&lt;/section&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+            </pre>
+
+            <b><u>JavaScript Code</u></b>
+            <pre class="code">
+function AppViewModel() {
+    this.staticData = [
+        {
+            courseIcon:"A",
+            courseName:"Android Basics",
+            courseDescription:"Teaches Hello World Application in Android"
+        },
+        {
+            courseIcon:"i",
+            courseName:"iOS Basics",
+            courseDescription:"Teaches Hello World Application in iOS"
+
+        },
+        {
+            courseIcon:"H",
+            courseName:"HTML5 Basics",
+            courseDescription:"Teaches HTML5 Fundamentals"
+        },
+        {
+            courseIcon:"C",
+            courseName:"CSS 3 Basics",
+            courseDescription:"Teaches CSS3 Fundamentals"
+        },
+        {
+            courseIcon:"M",
+            courseName:"MongoDB Basics",
+            courseDescription:"MongoDB Primer"
+        }
+    ];
+
+    this.strTrContain  = '&lt;tr class="course"&gt;';
+    this.strTrContain +=     '&lt;td&gt;&lt;div class="clogo"&gt;&lt;/div&gt;&lt;/td&gt;';
+    this.strTrContain +=     '&lt;td&gt;&lt;div class="name" &gt;&lt;/div&gt;&lt;/td&gt;';
+    this.strTrContain +=     '&lt;td&gt;&lt;div class="description" &gt;&lt;/div&gt;&lt;/td&gt;';
+    this.strTrContain +=     '&lt;td&gt;&lt;button class="del"&gt;X&lt;/button&gt;&lt;/td&gt;';
+    this.strTrContain += '&lt;/tr&gt;';
+
+    this.fillStaticData= function(){
+                            var self = this;
+                            $.each(this.staticData,function(index,value){
+                                self.addNewRow(value['courseIcon'],value['courseName'],value['courseDescription']);
+                            });
+                        }
+
+    this.addNewData= function(){
+                        this.addNewRow($('#newIcon').val(),$('#newName').val(),$('#newDescription').val())
+                        $('#newIcon').val('');
+                        $('#newName').val('');
+                        $('#newDescription').val('');
+                     }
+
+    this.addNewRow =    function(icon,name,description){
+                            var trContain = $(this.strTrContain);
+                            trContain.find('div.clogo').html(icon);
+                            trContain.find('div.name').html(name);
+                            trContain.find('div.description').html(description);
+
+                            //adding on click event to button.
+                            (trContain.find('button.del')).on('click',function(){
+                                $(this).parent().parent().remove();
+                            });
+
+                            $('#myTable tbody').append(trContain.clone(true));
+                        }
+}
+
+            </pre>
+            <a href="#TOC">Table of Contents</a>
+            <hr/>
+        </article>
+
+        <article>
+            <h3 class="topic"><a name="events-best-practices">Event handling best practices</a></h3>
+
+            <b><code>.on()</code></b>
+            <p>
+                Useful features of <code>.on()</code> method.
+            </p>
+            <ul>
+                <li>
+                    <b>Simple event binding</b>
+                    <pre class="code">
+// When any &lt;p&gt; tag is clicked, we expect to see '&lt;p&gt; was clicked' in the console.
+                        $( "p" ).on( "click", function() {
+                        console.log( "&lt;p&gt; was clicked" );
+                        });
+                    </pre>
+                </li>
+                <li>
+                    <b>Many events, but only one event handler</b>
+                    <pre class="code">
+// When a user focuses on or changes any input element, we expect a console message
+// bind to multiple events
+$( "div" ).on( "mouseenter mouseleave", function() {
+    console.log( "mouse hovered over or left a div" );
+});
+                    </pre>
+                </li>
+                <li>
+                    <b>Many events and handlers</b>
+                    <pre class="code">
+$( "div" ).on({
+    mouseenter: function() {
+        console.log( "hovered over a div" );
+    },
+    mouseleave: function() {
+        console.log( "mouse left a div" );
+    },
+    click: function() {
+        console.log( "clicked on a div" );
+    }
+});
+                    </pre>
+                </li>
+                <li>
+                    <b>The event object</b>
+                    <pre class="code">
+$( "div" ).on( "click", function( event ) {
+    console.log( "event object:" );
+    console.dir( event );
+});                    </pre>
+                </li>
+                <li>
+                    <b>Passing data to the event handler</b>
+                    <pre class="code">
+$( "p" ).on( "click", {
+    foo: "bar"
+}, function( event ) {
+    console.log( "event data: " + event.data.foo + " (should be 'bar')" );
+});
+                    </pre>
+                </li>
+                <li>
+                    <b>Binding events to elements that don't exist yet</b>
+                    <pre class="code">
+$( "ul" ).on( "click", "li", function() {
+    console.log( "Something in a &lt;ul&gt; was clicked, and we detected that it was an &lt;li&gt; element." );
+                        });
+                    </pre>
+                </li>
+            </ul>
+
+            <b>Connecting Events to Run Only Once</b>
+            <pre class="code">
+// Switching handlers using the '.one()' method
+$( "p" ).one( "click", function() {
+    console.log( "You just clicked this for the first time!" );
+    $( this ).click(function() {
+        console.log( "You have clicked this before!" );
+    });
+});
+            </pre>
+
+            <b>Disconnecting Events</b>
+
+            <pre class="code">
+// Unbinding a particular click handler, using a reference to the function
+var foo = function() {
+    console.log( "foo" );
+};
+
+var bar = function() {
+    console.log( "bar" );
+};
+
+$( "p" ).on( "click", foo ).on( "click", bar );
+
+// foo will stay bound to the click event
+$( "p" ).off( "click", bar );
+            </pre>
+            <a href="#TOC">Table of Contents</a>
+            <hr/>
+        </article>
+
+        <article>
+            <h3 class="topic"><a name="avoid-conflicts">Avoiding Conflicts with Other Libraries</a></h3>
+
+            <p>
+                The jQuery library contained within <code>jQuery</code> namespace, if we use this namespace then there
+                should not be any clash between jQuery and other libraries.
+            </p>
+            <p>
+                But by default, jQuery uses <code>$ as a shortcut for jQuery</code>. Thus, if you are using another
+                JavaScript library that uses the <code>$</code> variable, you can run into conflicts with jQuery.
+                In order to avoid these conflicts, you need to put jQuery in no-conflict mode immediately after it is
+                loaded onto the page and before you attempt to use jQuery in your page.Below are some ways.
+            </p>
+
+            <ul>
+                <li>
+                    <b>Create a New Alias</b>
+                    <p>
+                        The <code>jQuery.noConflict()</code> method returns a reference to the jQuery function, so
+                        you can capture it in whatever variable you'd like:
+                    </p>
+                    <pre class="code">
+&lt;script src="prototype.js"&gt;&lt;/script&gt;
+&lt;script src="jquery.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+
+    // Give $ back to prototype.js; create new alias to jQuery
+    var $jq = jQuery.noConflict();
+
+&lt;/script&gt;
+                    </pre>
+                </li>
+                <li>
+                    <b>Use the Argument That's Passed to the <code>jQuery(document).ready()</code> Function</b>
+                    <pre class="code">
+&lt;script src="jquery.js"&gt;&lt;/script&gt;
+&lt;script src="prototype.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+
+    jQuery(document).ready(function($){
+        // your jQuery code here, using $ to refer to jQuery
+    });
+
+&lt;/script&gt;
+                    </pre>
+                </li>
+                <li>
+                    <b>Use an Immediately Invoked Function Expression</b>
+                    <p>
+                        You can continue to use the standard <code>$</code> by wrapping your code in an
+                        immediately invoked function expression
+                    </p>
+                    <pre class="code">
+&lt;!-- Using the $ inside an immediately-invoked function expression --&gt;
+&lt;script src="prototype.js"&gt;&lt;/script&gt;
+&lt;script src="jquery.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+    jQuery.noConflict();
+
+    (function($) {
+        // your jQuery code here, using the $
+    })(jQuery);
+&lt;/script&gt;
+                    </pre>
+                </li>
+            </ul>
+            <a href="#TOC">Table of Contents</a>
+            <hr/>
+        </article>
+    </section>
+</section>
+
+</body>
+</html>

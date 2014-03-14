@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Synerzip's HTML5 Summit</title>
+    <link rel="stylesheet" href="/resources/css/main.css"/>
+</head>
+<body>
+<section class='container'>
+    <header class='header'>
+        <img class='logo' src='/resources/images/synerzip-logo-hi-res.gif'></img>
+    </header>
+    <hr/>
+    <section class="content">
+        <article>
+            <h3 class="topic">Chapter - 1 Basic setup with RequireJS - <a href="chapter-4-KinoEdu-BasicSetup/index.html" target="_blank">Launch</a>
+            </h3>
+            <p>
+                <ul>
+                    <li>Setup app with RequireJS to load backbone, jquery and underscore</li>
+                    <li>Create a App View as a container to render all HTML</li>
+                </ul>
+            </p>
+            <iframe src="chapter-4-KinoEdu-BasicSetup/index.html" width="100%" height="200px"></iframe>
+
+            <hr/>
+         </article>
+
+        <article>
+            <h3 class="topic">Chapter - 2 Course Model & View - <a href="chapter-5-KinoEdu-Model-View/index.html" target="_blank">Launch</a>
+            </h3>
+            <p>
+            <ul>
+                <li>Create App View</li>
+                <li>Create Course Model, View and Template</li>
+            </ul>
+            </p>
+            <iframe src="chapter-5-KinoEdu-Model-View/index.html" width="100%" height="250px"></iframe>
+
+            <hr/>
+        </article>
+
+        <article>
+            <h3 class="topic">Chapter - 3 Course Collection - <a href="chapter-6-KinoEdu-Collection/index.html" target="_blank">Launch</a>
+            </h3>
+            <p>
+            <ul>
+                <li>Create Course Collection</li>
+                <li>Load some default courses</li>
+            </ul>
+            </p>
+            <iframe src="chapter-6-KinoEdu-Collection/index.html" width="100%" height="250px"></iframe>
+
+            <hr/>
+        </article>
+
+        <article>
+            <h3 class="topic">Chapter - 4 Search - <a href="chapter-7-KinoEdu-Search/index.html" target="_blank">Launch</a>
+            </h3>
+            <p>
+            <ul>
+                <li>Add search input in App template</li>
+                <li>Bind keyup event</li>
+                <li>Filter collection</li>
+                <li>Listen for collection's <u>reset</u> event to update View</li>
+            </ul>
+            </p>
+            <iframe src="chapter-7-KinoEdu-Search/index.html" width="100%" height="250px"></iframe>
+
+            <hr/>
+        </article>
+
+        <article>
+            <h3 class="topic">Chapter - 5 Toggle View - <a href="chapter-8-KinoEdu-ToggleView/index.html" target="_blank">Launch</a>
+            </h3>
+            <p>
+            <ul>
+                <li>Create new template for course to show as a list</li>
+                <li>Add toggle buttons in App template</li>
+                <li>Bind click event to buttons</li>
+                <li>Pass view flag to Course view</li>
+                <li>Base on flag change the template of Course view</li>
+            </ul>
+            </p>
+            <iframe src="chapter-8-KinoEdu-ToggleView/index.html" width="100%" height="250px"></iframe>
+
+            <hr/>
+        </article>
+
+        <article>
+            <h3 class="topic">Chapter - 6 Create Course - <a href="chapter-9-KinoEdu-Create-Course/index.html" target="_blank">Launch</a>
+            </h3>
+            <p>
+            <ul>
+                <li>Add form in App template</li>
+                <li>Bind click event on Save button</li>
+                <li>Add validation in Course Model</li>
+                <li>Create new Course Model and add in Collection
+                <li>Listen for collection's <u>add</u> event to create and render new Course view</li>
+            </ul>
+            </p>
+            <iframe src="chapter-9-KinoEdu-Create-Course/index.html" width="100%" height="500px"></iframe>
+
+            <hr/>
+        </article>
+
+        <article>
+            <h3 class="topic">Chapter - 7 Edit Course - <a href="chapter-10-KinoEdu-Update-Course/index.html" target="_blank">Launch</a>
+            </h3>
+            <p>
+            <ul>
+                <li>Add Edit button in Course template</li>
+                <li>Bind click event on Edit button</li>
+                <li>Extend Course View with Backbone.Events to notify click event to APPView</li>
+                <li>In Course View, trigger <u>onEdit</u> event when user clicks on Edit button and pass current Model </li>
+                <li>In App View, listen for <u>onEdit</u> event of Course View </li>
+                <li>Fill the form fields with Model data, update the course Model on Save </li>
+                <li>In Course View, listen for <u>change</u> event of Model to update the View </li>
+            </ul>
+            </p>
+            <iframe src="chapter-10-KinoEdu-Update-Course/index.html" width="100%" height="500px"></iframe>
+
+            <hr/>
+        </article>
+    </section>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Synerzip's HTML5 Summit</title>
+    <link rel="stylesheet" href="/resources/css/main.css"/>
+    <script type="text/javascript" src="../jquery.js"></script>
+
+</head>
+<body>
+<section class='container'>
+    <header class='header'>
+        <img class='logo' src='/resources/images/synerzip-logo-hi-res.gif'></img>
+    </header>
+    <hr/>
+    <section class="content">
+        <h1>Working with selections</h1>
+        <hr/>
+
+        <h3>Getters and setters</h3>
+
+        <h5>Hello world!</h5>
+
+        <button onclick="$( 'h5' ).html( 'Hello Synerzip' );">
+            <code>Setter</code>
+        </button>
+
+        <button onclick="alert($( 'h5' ).html());">
+            <code>Getter</code>
+        </button>
+        <hr/>
+
+        <h3>Chaining</h3>
+
+        <div id="myDiv">
+            <h4>first h4</h4>
+            <h4>second h4</h4>
+            <h4>third h4</h4>
+        </div>
+        <button onclick='$("#myDiv").find("h4").eq( 2 ).html("new text for the third h3!")'>
+            <code>Chaining</code>
+        </button>
+        <hr/>
+    </section>
+</section>
+
+</body>
+</html>

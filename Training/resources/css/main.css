@@ -1,0 +1,57 @@
+@font-face {
+    font-family: 'oldmonk';
+    src: url('/fonts/Daru_Sans/DaruSans-Regular.ttf'); /* GOOGLE WEB FONTS */
+}
+
+@font-face {
+    font-family: 'kingfisher';
+    src: url('/fonts/Fauna_One/FaunaOne-Regular.ttf'); /* GOOGLE WEB FONTS */
+}
+
+
+
+body{
+    font-family: oldmonk;
+    background: #78b5fd;
+    padding:20px;
+}
+
+.logo{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width:275px;
+    height:46px;
+}
+
+.container{
+    border: 1px solid black;
+    border-radius: 10px;
+    background: #EFEFEF;
+    padding:20px;
+
+}
+.header{
+
+}
+
+.content{
+
+}
+
+.topic{
+    border:1px solid red;
+    border-radius:5px;
+    background: yellow;
+    padding:10px;
+}
+
+.code{
+    border:1px solid black;
+    margin:20px;
+    padding:20px;
+    background: white;
+
+}
+
+

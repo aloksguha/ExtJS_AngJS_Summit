@@ -1,0 +1,1 @@
+define(["book","user"],function(e,t){var n=function(e,t){var n=e,r=t;this.setBook=function(e){n=e},this.getBook=function(){return n},this.setUser=function(e){r=e},this.getUser=function(){return r}};return n});

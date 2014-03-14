@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Synerzip's HTML5 Summit</title>
+    <link rel="stylesheet" href="/resources/css/main.css"/>
+    <script type="text/javascript" src="knockout-2.2.1.js"></script>
+    <style>
+        .course-header {
+            height:30px;
+            text-decoration: underline;
+            font-weight:bold;
+        }
+        .course {
+            height:30px;
+        }
+
+        .course .clogo {
+            border-radius: 999px;
+            width: 18px;
+            height: 18px;
+            padding: 4px;
+            background: #fff;
+            border: 2px solid #666;
+            color: #666;
+            text-align: center;
+
+
+        }
+
+        .course .name {
+            width: 140px;
+
+        }
+
+        .course .description {
+            width: 400px;
+        }
+
+        .errorMessage{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+<section class='container'>
+    <header class='header'>
+        <img class='logo' src='/resources/images/synerzip-logo-hi-res.gif'></img>
+    </header>
+    <hr/>
+    <section class="content">
+        <h1>KnockoutJs - Handling Events</h1>
+        <hr/>
+        <h3>Courses</h3>
+        <div>
+            Search:<input type="text" data-bind="value:query, valueUpdate: 'afterkeydown'"><button data-bind="click: function(){query(null)}">X</button>
+        </div>
+        <div data-bind="visible: lastKnownError()!=null" class="errorMessage">
+            <table>
+                <tr>
+
+                    <td><div data-bind="text:lastKnownError"></div></td>
+                    <td><button data-bind="click:clearError">X</button></td>
+                </tr>
+            </table>
+        </div>
+        <table>
+            <thead>
+                <tr class="course-header">
+                    <td>Icon</td>
+                    <td>Name</td>
+                    <td>Description</td>
+                    <td>Actions</td>
+                </tr>
+                <tr class="course-header">
+                    <form data-bind="submit:addNewCourse">
+                    <td><input type="text" data-bind="value:newCourseIcon, valueUpdate: 'afterkeydown'"> </input> </td>
+                    <td><input type="text" data-bind="value:newCourseName, valueUpdate: 'afterkeydown'"> </input></td>
+                    <td><input type="text" data-bind="value:newCourseDescription, valueUpdate: 'afterkeydown'"> </input></td>
+                    <td><button data-bind="click:addNewCourse">Add New Course</button></td>
+                    </form>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: filteredCourses" >
+            <tr class="course">
+                <!-- ko if: editing() == false -->
+                <td>
+                    <div class="clogo" data-bind="text:courseIcon"></div>
+                </td>
+                <td>
+                    <div class="name" data-bind="text:courseName"></div>
+                </td>
+                <td>
+                    <div class="description" data-bind="text:courseDescription"></div>
+                </td>
+                <td>
+                    <button data-bind="click: $parent.startEditing">Edit</button> <button data-bind="click:$parent.deleteCourse">X</button>
+                </td>
+                <!-- /ko -->
+                <!-- ko if: editing() == true -->
+                <td>
+                    <input type="text" data-bind="value:courseIcon, valueUpdate: 'afterkeydown'"> </input>
+                </td>
+                <td>
+                    <input type="text" data-bind="value:courseName, valueUpdate: 'afterkeydown'"> </input>
+                </td>
+                <td>
+                    <input type="text" data-bind="value:courseDescription, valueUpdate: 'afterkeydown'"> </input>
+                </td>
+                <td>
+                    <button data-bind="click:$parent.doneEditing">Done</button>
+                </td>
+                <!-- /ko -->
+            </tr>
+            </tbody>
+        </table>
+
+    </section>
+</section>
+
+<script type="text/javascript" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+var Logger=function(e){var t=e||"Info";this.log=function(e){console.log(t+"  :  "+e)}};

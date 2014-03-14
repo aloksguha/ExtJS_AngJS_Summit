@@ -1,0 +1,29 @@
+.course-wrapper{
+	display: inline-block;
+	width: 33%;
+	border: 1px solid #AAA;
+	border-radius: 4px;
+	padding: 10px;
+}
+
+.course-wrapper .clogo {
+	display: inline-block;
+	border-radius: 999px;
+	width: 18px;
+	height: 18px;
+	padding: 4px;
+	background: #fff;
+	border: 2px solid #666;
+	color: #666;
+	text-align: center;
+}
+
+.course-wrapper  .course-name{
+	padding-bottom: 10px;
+	font-weight: bold;
+}
+
+.course-wrapper  .course-desc{
+	display: inline-block;
+	
+}

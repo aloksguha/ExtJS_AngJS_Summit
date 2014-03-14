@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Synerzip's HTML5 Summit</title>
+    <link rel="stylesheet" href="/resources/css/main.css"/>
+</head>
+<body>
+<section class='container'>
+    <header class='header'>
+        <img class='logo' src='/resources/images/synerzip-logo-hi-res.gif'></img>
+    </header>
+    <a href="/index.html">Return to Main Page</a>
+    <hr/>
+    <article>
+        <img src="backbone.png" width="" height=""></img>
+        <hr/>
+
+    </article>
+
+    <article>
+        <h1><a name="TOC">Table of Contents</a></h1>
+        <ul>
+            <li><a href="#presentation">Backbone MVC presentation</a></li>
+            <li><a href="#mockups">Sample App "KinoEdu" mockups</a></li>
+            <li><a href="#devlop">Develop "KinoEdu" step by step</a></li>
+           <ul>
+                <li><a href="#chapter-1">Chapter 1 - Basic Setup with RequireJS</a></li>
+                <li><a href="#chapter-2">Chapter 2 - Course Model & View</a></li>
+                <li><a href="#chapter-3">Chapter 3 - Course Collection</a></li>
+                <li><a href="#chapter-4">Chapter 4 - Search</a></li>
+                <li><a href="#chapter-5">Chapter 5 - Toggle View</a></li>
+                <li><a href="#chapter-6">Chapter 6 - Create Course</a></li>
+                <li><a href="#chapter-7">Chapter 7 - Edit Course</a></li>
+           </ul>
+        </ul>
+        <hr/>
+    </article>
+
+    <section class="content">
+        <article>
+            <h3 class="topic"><a name="presentation">Backbone MVC presentation</a></a>
+            </h3>
+            <p>
+                <ul>
+                    <li><a href="BackboneMVC.pptx">Presentation</a></li>
+                </ul>
+            </p>
+        </article>
+
+        <article>
+            <h3 class="topic"><a name="mockups">Sample App "KinoEdu" mockups</a></a>
+            </h3>
+            <p>
+                <iframe src="kinoEdu-Mockup/index.html" width="100%" height="2000px"></iframe>
+            </p>
+        </article>
+
+        <article>
+            <h3 class="topic"><a name="devlop">Develop "KinoEdu" step by step</a></a>
+            </h3>
+            <p>
+            </p>
+        </article>
+
+        <article>
+            <h3 class="topic"><a name="chapter-1">Chapter - 1 Basic setup with RequireJS</a> - <a href="chapter-4-KinoEdu-BasicSetup/index.html" target="_blank">Launch</a>
+            </h3>
+            <p>
+            <ul>
+                <li>Setup app with RequireJS to load backbone, jquery and underscore</li>
+                <li>Create App View as a container to render all HTML</li>
+            </ul>
+            </p>
+            <iframe src="chapter-4-KinoEdu-BasicSetup/index.html" width="100%" height="200px"></iframe>
+            index.html
+            <pre class="code">
+&lt;!DOCTYPE html&gt;<br/>&lt;html&gt;<br/>&lt;head&gt;<br/>    &lt;title&gt;Synerzip's HTML5 Summit&lt;/title&gt;<br/>    &lt;link rel=&quot;stylesheet&quot; href=&quot;/resources/css/main.css&quot;/&gt;<br/>	<br/>	&lt;script data-main=&quot;js/index&quot; src=&quot;js/libs/require/require.js&quot;&gt;&lt;/script&gt;<br/>	<br/>&lt;/head&gt;<br/>&lt;body&gt;<br/>&lt;section class='container'&gt;<br/>	&lt;section class=&quot;content&quot;&gt;&lt;article&gt;&lt;h1&gt;&lt;span&gt;KinoEdu&lt;/span&gt;&lt;/h1&gt;&lt;hr/&gt;&lt;/article&gt;&lt;/section&gt;<br/><br/>    &lt;div id=&quot;page-content&quot;&gt;<br/>         &lt;!-- App html will go here --&gt;<br/>    &lt;/div&gt;<br/>&lt;/section&gt;<br/><br/>&lt;/body&gt;<br/>&lt;/html&gt;
+            </pre>
+            index.js
+            <pre class="code">
+require.config({
+    baseUrl : "js/",
+    paths : {
+        jquery : 'libs/jquery/jquery-1.9.1.min',
+        underscore : 'libs/underscore/underscore',
+        backbone : 'libs/backbone/backbone0.9.10',
+        text : 'libs/require/text'
+    },
+    shim: {
+        'backbone': {
+            deps: ['underscore', 'jquery'],
+            exports: 'Backbone'
+        },
+        'underscore': {
+            exports: '_'
+        }
+    }
+});
+
+require([ 'backbone', 'views/appView'],
+    function(Backbone, AppView) {
+        appView = new AppView({
+            el: $("#page-content")
+        });
+    }
+);
+            </pre>
+            AppView.js
+            <pre class="code">
+define([ 'jquery', 'underscore', 'backbone', 'text!templates/appTpl.html' ],
+		function($, _, Backbone, appTemplate) {
+
+	var appView = Backbone.View.extend({
+
+		template : _.template(appTemplate),
+
+		initialize: function(){
+			this.render();
+		},
+
+		render: function() {
+			this.$el.html(this.template());
+			return this;
+		}
+	});
+
+	return appView;
+});
+            </pre>
+
+            appTpl.html
+            <pre class="code">
+&lt;div id=&quot;course-list&quot;&gt;<br/>    &lt;!-- Course list will go here --&gt;<br/>&lt;/div&gt;
+            </pre>
+            <a href="#TOC">Table of Contents</a>
+            <hr/>
+        </article>
+
+        <article>
+            <h3 class="topic"><a name="chapter-2">Chapter - 2 Course Model & View</a> - <a href="chapter-5-KinoEdu-Model-View/index.html" target="_blank">Launch</a>
+            </h3>
+            <p>
+            <ul>
+                <li>Create a Model for Course</li>
+                <li>Create View and Template for Course</li>
+            </ul>
+            </p>
+            <iframe src="chapter-5-KinoEdu-Model-View/index.html" width="100%" height="250px"></iframe>
+            course.js //Course Model
+            <pre class="code">
+define(['backbone' ], function(Backbone) {
+	var courseModel = Backbone.Model.extend({
+
+		defaults : {
+            icon : "C",
+			name : "New Course Name",
+			description : "New Course Description"
+		},
+
+        validate: function(attrs, options) {
+            if (!attrs.name) {
+                return "Please enter name";
+            } else if (!attrs.description) {
+                return "Please enter description";
+            }  else if (!attrs.icon) {
+                return "Please enter icon";
+            }
+        }
+	});
+	return courseModel;
+});
+
+            </pre>
+            courseView.js
+            <pre class="code">
+define([ 'jquery', 'underscore', 'backbone', 'text!templates/courseTpl.html' ],
+		function($, _, Backbone, courseTemplate) {
+
+	var courseView = Backbone.View.extend({
+		className: "course-wrapper",
+
+		template : _.template(courseTemplate),
+
+		render: function() {
+			this.$el.html(this.template(this.model.toJSON()));
+			return this;
+		}
+	});
+	return courseView;
+});
+            </pre>
+            courseTpl.html
+            <pre class="code">
+ &lt;div class=&quot;course-name&quot;&gt;&lt;%= name %&gt;&lt;/div&gt;<br/>&lt;div class=&quot;clogo&quot;&gt;C&lt;/div&gt;<br/>&lt;div class=&quot;course-desc&quot;&gt;&lt;%= description %&gt;&lt;/div&gt;
+            </pre>
+            <a href="#TOC">Table of Contents</a>
+            <hr/>
+        </article>
+
+        <article>
+            <h3 class="topic"><a name="chapter-3">Chapter - 3 Course Collection</a> - <a href="chapter-6-KinoEdu-Collection/index.html" target="_blank">Launch</a>
+            </h3>
+            <p>
+            <ul>
+                <li>Create Course Collection</li>
+                <li>Load and render some default courses</li>
+            </ul>
+            </p>
+            <iframe src="chapter-6-KinoEdu-Collection/index.html" width="100%" height="700px"></iframe>
+            courses.js
+            <pre class="code">
+  define(['backbone', 'models/course' ], function(Backbone, CourseModel) {
+
+    var courseCollection = Backbone.Collection.extend({
+        model: CourseModel
+    });
+
+    return courseCollection;
+});
+            </pre>
+            AppView.js
+            <pre class="code">
+        .....
+
+        render: function() {
+
+            this.$el.html(this.template());
+
+            var courses = new CourseCollection([
+                {
+                    name : "HTML5",
+                    description : "HTML5 Fundamentals"
+                },{
+                    name : "CSS3",
+                    description : "CSS3 Fundamentals"
+                },{
+                    name : "JQuery",
+                    description : "JQuery Fundamentals"
+                },{
+                    name:"Android Basics",
+                    description:"Teaches Hello World Application in Android"
+                },{
+                    name:"iOS Basics",
+                    description:"Teaches Hello World Application in iOS"
+                }
+            ]);
+
+            courses.each(function(course){
+                var courseView = new CourseView({
+                    model: course
+                });
+                this.$("#course-list").append(courseView.render().el);
+            });
+
+            return this;
+        }
+
+        ....
+            </pre>
+            <a href="#TOC">Table of Contents</a>
+            <hr/>
+        </article>
+
+        <article>
+            <h3 class="topic"><a name="chapter-4">Chapter - 4 Search</a> - <a href="chapter-7-KinoEdu-Search/index.html" target="_blank">Launch</a>
+            </h3>
+            <p>
+            <ul>
+                <li>Add search input in App template</li>
+                <li>Bind keyup event</li>
+                <li>Filter collection</li>
+                <li>Listen for collection's <u>reset</u> event to update View</li>
+            </ul>
+            </p>
+            <iframe src="chapter-7-KinoEdu-Search/index.html" width="100%" height="700px"></iframe>
+            appTpl.js
+            <pre class="code">
+&lt;div class=&quot;toolbar&quot;&gt;<br/>    &lt;span&gt;Search:&lt;/span&gt;   &lt;input class=&quot;search&quot; type=&quot;text&quot; /&gt;<br/>&lt;/div&gt;<br/><br/>&lt;div id=&quot;course-list&quot;&gt;&lt;/div&gt;
+            </pre>
+            appView.js
+            <pre class="code">
+            var appView = Backbone.View.extend({
+
+                events: {
+                    "keyup input.search": "filter"
+                },
+
+            ....
+            </pre>
+            <pre class="code">
+            filter: function(){
+                var searchStr = this.$("input.search").val();
+
+                //filter collection
+                this.courses.reset(
+                    _.filter(this.dataArr, function(course){
+                        return course.name.indexOf(searchStr)!=-1;
+                    })
+                );
+            }
+            </pre>
+
+            <pre class="code">
+            initialize: function(){
+
+                .....
+                this.listenTo(this.courses, "reset", this.renderCourses);
+            }
+
+            </pre>
+
+            <pre class="code">
+            renderCourses: function(){
+                this.$("#course-list").html("");
+
+                this.courses.each(function(course){
+                    var courseView = new CourseView({
+                        model: course
+                    });
+                    this.$("#course-list").append(courseView.render().el);
+                });
+            },
+            </pre>
+            <a href="#TOC">Table of Contents</a>
+            <hr/>
+        </article>
+
+        <article>
+            <h3 class="topic"><a name="chapter-5">Chapter - 5 Toggle View</a> - <a href="chapter-8-KinoEdu-ToggleView/index.html" target="_blank">Launch</a>
+            </h3>
+            <p>
+            <ul>
+                <li>Create a new template to show Courses as a list</li>
+                <li>Add toggle buttons "Grid" and "List" in template</li>
+                <li>Bind click event to buttons</li>
+                <li>Based on selected type change the template of Course View</li>
+            </ul>
+            </p>
+            <iframe src="chapter-8-KinoEdu-ToggleView/index.html" width="100%" height="700px"></iframe>
+            courseListTpl.html
+            <pre class="code">
+&lt;div class=&quot;clogo&quot;&gt;&lt;%= icon %&gt;&lt;/div&gt;<br/>&lt;div class=&quot;course-name&quot;&gt;&lt;%= name %&gt;&lt;/div&gt;<br/>&lt;div class=&quot;course-desc&quot;&gt;&lt;%= description %&gt;&lt;/div&gt;
+            </pre>
+
+            appTpl.html
+            <pre class="code">
+&lt;div class=&quot;toolbar&quot;&gt;<br/>    &lt;span&gt;Search:&lt;/span&gt;   &lt;input class=&quot;search&quot; type=&quot;text&quot; /&gt;<br/>    &lt;span class=&quot;toggle-button&quot;&gt;<br/>        &lt;span class=&quot;grid-view active&quot;&gt;Grid&lt;/span&gt;<br/>        &lt;span class=&quot;list-view&quot;&gt;List&lt;/span&gt;<br/>    &lt;/span&gt;<br/>&lt;/div&gt;<br/><br/>&lt;div id=&quot;course-list&quot;&gt;&lt;/div&gt;
+            </pre>
+
+            appView.js
+            <pre class="code">
+....
+
+            events: {
+                "keyup input.search": "filter",
+                "click span.grid-view": "gridView",
+                "click span.list-view": "listView"
+            },
+
+....
+            </pre>
+            <pre class="code">
+....
+            gridView: function(event){
+                this.viewType = "grid";
+                this.renderCourses();
+            },
+
+            listView: function(event){
+                this.viewType = "list";
+                this.renderCourses();
+            },
+
+            renderCourses: function(){
+                this.$("#course-list").html("");
+
+                if(this.viewType=="list"){
+                    this.$("#course-list").html(
+                                            '&lt;div class=&quot;course-row header&quot;&gt;&lt;div class=&quot;clogo&quot;&gt;&lt;/div&gt;'+<br/>                                            '&lt;div class=&quot;course-name&quot;&gt;Name&lt;/div&gt;'+<br/>                                            '&lt;div class=&quot;course-desc&quot;&gt;Description&lt;/div&gt;'+<br/>                                            '&lt;/div&gt;');
+                }
+
+                var self = this;
+                this.courses.each(function(course){
+                    var courseView = new CourseView({
+                        model: course,
+                        viewType: self.viewType
+                    });
+                    this.$("#course-list").append(courseView.render().el);
+                });
+            },
+
+.....
+
+            </pre>
+            courseView.js
+            <pre class="code">
+.....
+        initialize: function(){
+            this.viewType = this.options.viewType || "grid";
+
+            if(this.viewType == "grid"){
+                this.template = _.template(courseGridTemplate);
+                this.$el.addClass("course-wrapper");
+            } else {
+                this.template = _.template(courseListTemplate);
+                this.$el.addClass("course-row");
+            }
+        },
+.....
+            </pre>
+            <a href="#TOC">Table of Contents</a>
+            <hr/>
+        </article>
+
+        <article>
+            <h3 class="topic"><a name="chapter-6">Chapter - 6 Create Course</a> - <a href="chapter-9-KinoEdu-Create-Course/index.html" target="_blank">Launch</a>
+            </h3>
+            <p>
+            <ul>
+                <li>Add the create course form in App template</li>
+                <li>Bind click event on Save button</li>
+                <li>Create new Course Model based on form values</li>
+                <li>After validation add in the Collection</li>
+                <li>Listen for collection's <u>add</u> event to create and render new Course view</li>
+            </ul>
+            </p>
+            <iframe src="chapter-9-KinoEdu-Create-Course/index.html" width="100%" height="700px"></iframe>
+            appTpl.html
+            <pre class="code">
+&lt;div class=&quot;toolbar&quot;&gt;<br/>    &lt;span&gt;Search:&lt;/span&gt;   &lt;input class=&quot;search&quot; type=&quot;text&quot; /&gt;<br/>    &lt;span class=&quot;toggle-button&quot;&gt;&lt;span class=&quot;grid-view active&quot;&gt;Grid&lt;/span&gt;&lt;span class=&quot;list-view&quot;&gt;List&lt;/span&gt;&lt;/span&gt;<br/>&lt;/div&gt;<br/><br/>&lt;div id=&quot;course-form-div&quot;&gt;<br/>   &lt;form id=&quot;course-form&quot;&gt;<br/>       &lt;span class=&quot;label&quot;&gt;Icon:&lt;/span&gt; &lt;input name=&quot;icon&quot; type=&quot;text&quot; maxlength=&quot;1&quot;/&gt;  &lt;br/&gt;<br/>        &lt;span class=&quot;label&quot;&gt;Name:&lt;/span&gt; &lt;input name=&quot;name&quot; type=&quot;text&quot;/&gt;  &lt;br/&gt;<br/>        &lt;span class=&quot;label&quot;&gt;Description:&lt;/span&gt; &lt;input name=&quot;description&quot; type=&quot;text&quot;/&gt;   &lt;br/&gt;<br/>        &lt;input class=&quot;save-btn&quot; type=&quot;button&quot; value=&quot;Save&quot;/&gt;<br/>   &lt;/form&gt;<br/>&lt;/div&gt;<br/>        <br/>&lt;div id=&quot;course-list&quot;&gt;&lt;/div&gt;
+            </pre>
+
+            appView.js
+            <pre class="code">
+            events: {
+                ....
+                "click .save-btn": "saveCourse"
+            },
+            </pre>
+
+            <pre class="code">
+            saveCourse: function(){
+                var newCourse = new CourseModel({
+                        "icon": this.$("#course-form input[name=icon]").val(),
+                        "name": this.$("#course-form input[name=name]").val(),
+                        "description": this.$("#course-form input[name=description]").val()
+                });
+
+                if (!newCourse.isValid()) {
+                    alert("Please fill all the details");
+                    return false;
+                }
+
+                this.courses.add(newCourse);
+
+                this.resetForm();
+            },
+            </pre>
+
+            <pre class="code">
+            initialize: function(){
+
+                .....
+                this.listenTo(this.courses, "add", this.addOneCourse);
+            }
+            </pre>
+
+            <pre class="code">
+            addOneCourse: function(newCourse){
+                var self = this;
+                var courseView = new CourseView({
+                    model: newCourse,
+                    viewType: self.viewType
+                });
+                this.$("#course-list").append(courseView.render().el);
+            },
+            </pre>
+
+            <a href="#TOC">Table of Contents</a>
+            <hr/>
+        </article>
+
+        <article>
+            <h3 class="topic"><a name="chapter-7">Chapter - 7 Edit Course</a> - <a href="chapter-10-KinoEdu-Update-Course/index.html" target="_blank">Launch</a>
+            </h3>
+            <p>
+            <ul>
+                <li>Add Edit button in Course template</li>
+                <li>Bind click event on Edit button</li>
+                <li>Extend Course View with Backbone.Events to notify click event to App View</li>
+                <li>In Course View, trigger <u>onEdit</u> event when user clicks on Edit button and pass current Model </li>
+                <li>In App View, listen for <u>onEdit</u> event of Course View </li>
+                <li>Fill the form fields with Model data, update the course Model on Save </li>
+                <li>In Course View, listen for <u>change</u> event of Model to update the View </li>
+            </ul>
+            </p>
+            <iframe src="chapter-10-KinoEdu-Update-Course/index.html" width="100%" height="700px"></iframe>
+            courseTpl.html
+            <pre class="code">
+&lt;div class=&quot;course-name&quot;&gt;<br/>    &lt;%= name %&gt;<br/>    &lt;button class=&quot;edit-course&quot;&gt;Edit&lt;/button&gt;<br/>&lt;/div&gt;<br/>&lt;div class=&quot;clogo&quot;&gt;&lt;%= icon %&gt;&lt;/div&gt;<br/>&lt;div class=&quot;course-desc&quot;&gt;&lt;%= description %&gt;&lt;/div&gt;
+            </pre>
+
+            courseListTpl.html
+            <pre class="code">
+&lt;div class=&quot;clogo&quot;&gt;&lt;%= icon %&gt;&lt;/div&gt;<br/>&lt;div class=&quot;course-name&quot;&gt;&lt;%= name %&gt;&lt;/div&gt;<br/>&lt;div class=&quot;course-desc&quot;&gt;&lt;%= description %&gt;&lt;/div&gt;<br/>&lt;div class=&quot;course-action&quot;&gt;<br/>    &lt;button class=&quot;edit-course&quot;&gt;Edit&lt;/button&gt;<br/>&lt;/div&gt;
+            </pre>
+
+            courseView.js
+            <pre class="code">
+            events:{
+                "click .edit-course":"editCourse"
+            },
+            </pre>
+
+            <pre class="code">
+            initialize: function(){
+                _.extend(this, Backbone.Events);
+
+                .....
+            }
+            </pre>
+
+            <pre class="code">
+            editCourse: function(){
+                 this.trigger("onEdit", this.model);
+            }
+            </pre>
+
+            appView.js
+            <pre class="code">
+            addOneCourse: function(newCourse){
+                var self = this;
+                var courseView = new CourseView({
+                    model: newCourse,
+                    viewType: self.viewType
+                });
+                this.$("#course-list").append(courseView.render().el);
+
+                this.listenTo(courseView, "onEdit", this.editCourse);
+            },
+            </pre>
+
+
+            <pre class="code">
+            editCourse: function(course){
+                this.editCourseModel = course;
+                this.$("#course-form input[name=icon]").val(course.get("icon")),
+                this.$("#course-form input[name=name]").val(course.get("name")),
+                this.$("#course-form input[name=description]").val(course.get("description"))
+            }
+            </pre>
+
+            <pre class="code">
+            saveCourse: function(){
+                var newCourse = new CourseModel({
+                    "icon": this.$("#course-form input[name=icon]").val(),
+                    "name": this.$("#course-form input[name=name]").val(),
+                    "description": this.$("#course-form input[name=description]").val()
+                });
+
+                if (!newCourse.isValid()) {
+                    alert("Please fill all the details");
+                    return;
+                }
+
+                if(this.editCourseModel){  //Edit mode
+                    this.editCourseModel.set(newCourse.toJSON());
+
+                    this.editCourseModel = null;
+                } else { //create new
+                    this.courses.add(newCourse);
+                }
+
+                this.resetForm();
+            },
+            </pre>
+
+            <a href="#TOC">Table of Contents</a>
+            <hr/>
+        </article>
+    </section>
+</section>
+
+</body>
+</html>
+
+<!--<!DOCTYPE html>
+<html>
+<head>
+    <title>Synerzip's HTML5 Summit</title>
+    <link rel="stylesheet" href="/resources/css/main.css"/>
+</head>
+<body>
+<section class='container'>
+    <header class='header'>
+        <img class='logo' src='/resources/images/synerzip-logo-hi-res.gif'></img>
+    </header>
+    <a href="/index.html">Return to Main Page</a>
+    <hr/>
+    <section class="content">
+        <h1><span>BackboneJS MVC</span></h1>
+        <ul>
+            <li><a href="BackboneMVC.pptx">Presentation</a></li>
+			<br/>
+			
+            <li><a href="chapter-1-Model/index.html" target="_blank">Model</a></li>
+            <li><a href="chapter-2-View/index.html" target="_blank">View</a></li>
+            <li><a href="chapter-3-Collection/index.html" target="_blank">Collection</a></li>
+			<br/>
+			
+			<li><a href="kinoEdu-Mockup/index.html" target="_blank">KinoEdu mockups</a></li>
+            <li><a href="kinoEdu.html" target="_blank">Develop KinoEdu step by step</a></li>
+            <!--
+            <li><a href="chapter-4-KinoEdu-BasicSetup/index.html" target="_blank">KinoEdu - Basic Setup with RequireJS</a></li>
+            <li><a href="chapter-5-KinoEdu-Model-View/index.html" target="_blank">KinoEdu - Course Model & View</a></li>
+            <li><a href="chapter-6-KinoEdu-Collection/index.html" target="_blank">KinoEdu - Course Collection</a></li>
+            <li><a href="chapter-7-KinoEdu-Search/index.html" target="_blank">KinoEdu - Search</a></li>
+            <li><a href="chapter-8-KinoEdu-ToggleView/index.html" target="_blank">KinoEdu - Toggle View</a></li>
+            <li><a href="chapter-9-KinoEdu-Create-Course/index.html" target="_blank">KinoEdu - Create Course</a></li>
+            <li><a href="chapter-10-KinoEdu-Update-Course/index.html" target="_blank">KinoEdu - Edit Course</a></li>
+            -->
+        <!--
+        </ul>
+    </section>
+</section>
+
+</body>
+</html>
+        -->

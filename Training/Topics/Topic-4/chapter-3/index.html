@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Synerzip's HTML5 Summit</title>
+    <link rel="stylesheet" href="/resources/css/main.css"/>
+    <script type="text/javascript" src="knockout-2.2.1.js"></script>
+    <style>
+        .course-header {
+            height:30px;
+            text-decoration: underline;
+            font-weight:bold;
+        }
+        .course {
+            height:30px;
+        }
+
+        .course .clogo {
+            border-radius: 999px;
+            width: 18px;
+            height: 18px;
+            padding: 4px;
+            background: #fff;
+            border: 2px solid #666;
+            color: #666;
+            text-align: center;
+
+
+        }
+
+        .course .name {
+            width: 140px;
+
+        }
+
+        .course .description {
+            width: 400px;
+        }
+    </style>
+</head>
+<body>
+<section class='container'>
+    <header class='header'>
+        <img class='logo' src='/resources/images/synerzip-logo-hi-res.gif'></img>
+    </header>
+    <hr/>
+    <section class="content">
+        <h1>KnockoutJs - Iterating Over Data</h1>
+        <hr/>
+        <h3>Courses</h3>
+
+        <div data-bind="foreach: courses">
+            <div>
+                <span data-bind="text: courseIcon"></span>
+                <span data-bind="text: courseName"></span>
+            </div>
+        </div>
+
+
+
+
+    </section>
+</section>
+
+<script type="text/javascript" src="app.js"></script>
+</body>
+</html>

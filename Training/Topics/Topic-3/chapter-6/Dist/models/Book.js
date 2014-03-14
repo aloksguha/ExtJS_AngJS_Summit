@@ -1,0 +1,1 @@
+define(["publisher","author"],function(e,t){var n=function(n,r,i){var s=n,o=new e(r),u=new t(i);this.setName=function(e){s=e},this.getName=function(){return s},this.setPublisher=function(e){o=e},this.getPublisher=function(){return o},this.setAuthor=function(e){u=e},this.getAuthor=function(){return u}};return n});

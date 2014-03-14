@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Synerzip's HTML5 Summit</title>
+    <link rel="stylesheet" href="/resources/css/main.css"/>
+</head>
+<body>
+<section class='container'>
+    <header class='header'>
+        <img class='logo' src='/resources/images/synerzip-logo-hi-res.gif'></img>
+    </header>
+    <hr/>
+    <section class="content">
+        <h1><img src="../../images/grunt-logo.svg" height="100"><br><span>The JavaScript Task Runner</span></h1>
+	<h4><a href="../../index.html">Back to topic</a></h4>
+	<h3 class="topic">Simple Example</h3>
+    <section>
+	<p>Code location: Training/Topics/Topic-13/examples/simple </p>
+	<pre class="code">
+// Install required plugins. Plugins should be specified in package.json file.
+$> npm install
+...
+
+// This will list Available tasks
+$> grunt --help 
+....
+
+// Let's run concat task
+$> grunt concat
+Running "concat:dist" (concat) task
+File "dist/simple.js" created.
+
+Done, without errors.
+	</pre>
+	<p>Let's add new task</p>
+	<pre class="code">
+// Add grunt-contrib-jshint task
+$> npm install grunt-contrib-jshint --save-dev
+
+// add entry in Gruntfile to load the task "grunt.loadNpmTasks('grunt-contrib-jshint');"
+
+// Lets run jshint
+$> grunt jshint
+    </section>
+    </section>
+</section>
+
+</body>
+</html>

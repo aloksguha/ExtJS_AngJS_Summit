@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Synerzip's HTML5 Summit</title>
+    <link rel="stylesheet" href="/resources/css/main.css"/>
+    <script type="text/javascript" src="../jquery.js"></script>
+    <style>
+        .grandparent {
+            width: 400px;
+            height: 400px;
+            padding: 5px;
+            margin: 5px;
+            background-color: yellow;
+        }
+        .parent,.surrogateParent1,.surrogateParent2 {
+            width: 100px;
+            height: 100px;
+            padding: 5px;
+            margin: 5px;
+            background-color: blue;
+        }
+        .child {
+            width: 70px;
+            height: 70px;
+            padding: 5px;
+            margin: 5px;
+            background-color: white;
+        }
+        .subchild {
+            width: 40px;
+            height: 40px;
+            padding: 5px;
+            margin: 5px;
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+<section class='container'>
+    <header class='header'>
+        <img class='logo' src='/resources/images/synerzip-logo-hi-res.gif'></img>
+    </header>
+    <hr/>
+    <section class="content">
+        <h1>Traversing</h1>
+        <div class="grandparent">Grand Pa
+            <div class="parent">Father
+                <div class="child">Son
+                    <div class="subchild">Grand Son</div>
+                </div>
+            </div>
+            <div class="surrogateParent1">Uncle</div>
+            <div class="surrogateParent2">Aunty</div>
+        </div>
+
+        <div style="top: -409px;left: 40%;position: relative;">
+            <b>Parent traversing</b>
+            <button onclick="parent1();">Grand Son's parent</button>
+            <button onclick="parent2();">Grand Son's parents</button>
+            <button onclick="parent3();">Grand Son's parents until "Grand pa"</button>
+        </div>
+        <div style="top: -309px;left: 40%;position: relative;">
+            <b>Children traversing</b>
+            <button onclick="children1();">Grand pa's children</button>
+        </div>
+        <div style="top: -209px;left: 40%;position: relative;">
+            <b>Siblings traversing</b>
+            <button onclick="sibling1();">Father's siblings</button>
+        </div>
+    </section>
+</section>
+<script type="text/javascript">
+    function parent1(){
+        $("div").css('border','');
+        $(".subchild").parent().each(function(index,element){
+            $(this).css( 'border','3px  dotted red' );
+        });
+    }
+    function parent2(){
+        $("div").css('border','');
+        $(".subchild").parents('div').each(function(index,element){
+            $(this).css( 'border','3px dotted red' );
+        });
+    }
+    function parent3(){
+        $("div").css('border','');
+        $(".subchild").parentsUntil(".grandparent").each(function(index,element){
+            $(this).css( 'border','3px dotted red' );
+        });
+    }
+    function children1(){
+        $("div").css('border','');
+        $(".grandparent").children().each(function(index,element){
+            $(this).css( 'border','3px dotted red' );
+        });
+    }
+    function sibling1(){
+        $("div").css('border','');
+        $(".parent").siblings().each(function(index,element){
+            $(this).css( 'border','3px dotted red' );
+        });
+    }
+</script>
+</body>
+</html>
