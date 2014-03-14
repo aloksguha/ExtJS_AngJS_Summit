@@ -1,1 +1,0 @@
-define([],function(){var e=function(e){var t=e;this.setName=function(e){t=e},this.getName=function(){return t}};return e});
