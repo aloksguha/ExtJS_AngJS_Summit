@@ -19,18 +19,30 @@ body{
 .logo{
     display: block;
     margin-left: auto;
-    margin-right: auto;
     width:275px;
     height:46px;
 }
 
 .container{
     border: 1px solid black;
-    border-radius: 10px;
+    border-radius: 5px 45px 5px 45px;
     background: #EFEFEF;
     padding:20px;
+    box-shadow: 10px 10px 5px #959e98;
 
 }
+
+hr {
+    color: #1e0d9e;
+    background-color: #1e0d9e;
+    height: 0.5px;
+}
+
+.productLogo{
+
+
+}
+
 .header{
 
 }
@@ -41,9 +53,10 @@ body{
 
 .topic{
     border:1px solid #1e0d9e;
-    border-radius:5px;
+    border-radius:45px;
     background: #78b5fd;
     padding:10px;
+
 }
 
 .code{
