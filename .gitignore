@@ -1,3 +1,5 @@
+.idea
+extzip
 lib-cov
 *.seed
 *.log
@@ -14,6 +16,6 @@ logs
 results
 
 public/components/*
-./idea
+
 npm-debug.log
 node_modules
