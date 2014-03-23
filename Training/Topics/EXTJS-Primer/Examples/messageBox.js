@@ -5,8 +5,8 @@
 // Entry point of ExtJS
 Ext.onReady(function () {
 
-	Ext.MessageBox.confirm('Confirm', 'Are you sure you want to do Ext ?', function(result){
-     Ext.get('result').setHTML(result);
+	Ext.MessageBox.alert('Hello World', 'Hello World of ExtJS', function(result){
+     //Ext.get('result').setHTML(result);
 	});
 
 //
