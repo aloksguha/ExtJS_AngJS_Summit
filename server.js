@@ -12,6 +12,10 @@ app.get('/',function(req,res){
     res.redirect('/index.html');
 });
 
+app.get('/table',function(req,res){
+	res.redirect('/table.html');
+});
+
 app.configure(function(){
     app.use(express.directory(__dirname + '/Training'));
     app.use(express.static(__dirname + '/Training'));
