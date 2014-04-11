@@ -21,7 +21,7 @@ Ext.onReady(function(){
   Ext.create('Ext.tree.Panel', {
     title: 'Synerzip Tree',
     width: 200,
-    height: 150,
+    height: 250,
     store: synerzipTreeStore,
     rootVisible: true,
     renderTo: Ext.getBody()
